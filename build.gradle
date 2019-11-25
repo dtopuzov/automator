@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+}
+
+group 'com.topuzov'
+version '1.0-SNAPSHOT'
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /*
+    Do not use testng@7.0.0 because of this issue:
+    https://stackoverflow.com/questions/55125096/gradle-ignores-priority-in-testng
+    https://github.com/cbeust/testng/issues/2170
+     */
+    implementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.2'
+    implementation group: 'io.appium', name: 'java-client', version: '7.3.0'
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.7.1'
+    testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.0.1'
+}
+
+test {
+    useJUnitPlatform()
+
+    maxHeapSize = '1G'
+    int cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    systemProperties = [
+            'junit.jupiter.execution.parallel.enabled'                 : true,
+            'junit.jupiter.execution.parallel.mode.default'            : 'same_thread',
+            'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
+            'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
+            'junit.jupiter.execution.parallel.config.fixed.parallelism': cores
+    ]
+    maxParallelForks = cores
+    forkEvery = 1
+
+    testLogging {
+        //noinspection GrUnresolvedAccess
+        events "passed", "skipped", "failed"
+    }
+
+    reports {
+        junitXml.enabled = true
+        html.enabled = true
+    }
+}
