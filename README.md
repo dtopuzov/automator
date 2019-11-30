@@ -1,6 +1,8 @@
 # The Automator
 Java based automation framework for web, mobile, desktop and APIs.
 
+**!!! Note: Work in progress !!!**
+
 ## Technology Stack
 - [Junit5](https://github.com/junit-team/junit5) as unit testing framework.
 - [Appium](https://github.com/appium/java-client) to drive mobile and web.
