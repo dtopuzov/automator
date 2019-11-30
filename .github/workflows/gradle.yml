@@ -10,9 +10,34 @@ on:
     - cron:  '0 * * * *'
       
 jobs:
-  build:
-
+  web-tests-ubuntu:
     runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+      with:
+        ref: ${{ github.ref }}
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Gradle
+      run: ./gradlew clean test --tests "web.perf.*"
+  web-tests-windows:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@master
+      with:
+        ref: ${{ github.ref }}
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Gradle
+      run: ./gradlew clean test --tests "web.perf.*"
+  web-tests-macos:
+    runs-on: macOS-latest
 
     steps:
     - uses: actions/checkout@master
