@@ -47,5 +47,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Install Chrome
+      run: 'brew cask install google-chrome'
     - name: Build with Gradle
       run: ./gradlew clean test --tests "web.perf.*"
