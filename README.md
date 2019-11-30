@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://github.com/dtopuzov/automator"><img alt="CI Status" src="https://github.com/dtopuzov/automator/workflows/CI/badge.svg"></a>
+</p>
+
 # The Automator
 Java based automation framework for web, mobile, desktop and APIs.
 
