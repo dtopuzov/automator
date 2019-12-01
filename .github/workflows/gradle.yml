@@ -48,6 +48,6 @@ jobs:
       with:
         java-version: 1.8
     - name: Install Chrome
-      run: 'brew install brew-cask && brew cask install google-chrome'
+      run: 'brew install wget'
     - name: Build with Gradle
       run: ./gradlew clean test --tests "web.perf.*"
