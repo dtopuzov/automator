@@ -48,6 +48,6 @@ jobs:
       with:
         java-version: 1.8
     - name: Install Chrome
-      run: 'brew install wget'
+      run: 'wget https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg && open ~/Downloads/googlechrome.dmg && sudo cp -r /Volumes/Google\ Chrome/Google\ Chrome.app /Applications/'
     - name: Build with Gradle
       run: ./gradlew clean test --tests "web.perf.*"
