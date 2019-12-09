@@ -1,4 +1,4 @@
-package web.perf;
+package perf;
 
 import java.util.Random;
 

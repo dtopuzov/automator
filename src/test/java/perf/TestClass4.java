@@ -1,4 +1,4 @@
-package web.perf;
+package perf;
 
 import org.junit.jupiter.api.Test;
 import web.base.WebTest;

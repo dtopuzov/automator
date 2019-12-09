@@ -12,19 +12,10 @@ Java based automation framework for web, mobile, desktop and APIs.
 - [Appium](https://github.com/appium/java-client) to drive mobile and web.
 - [WebDriverManager](https://github.com/bonigarcia/webdrivermanager) to manage of Selenium WebDriver binaries.
 
-## Samples
-Sample tests are available in `test` package.
+## Usage and Samples
 
-Details:
-- [WebTests.md](src/test/java/web/WebTests.md)
+Please read [Usage and Samples](docs/Usage.md) document.
 
-### Execute Test
-```
-./gradlew clean test --tests "web.perf.*"
-```
+# Contributing
 
-### Run Checkstyle
-```
-./gradlew clean checkstyleMain
-./gradlew clean checkstyleTest
-```
+Please take a look at our [contribution documentation](CONTRIBUTING.md).

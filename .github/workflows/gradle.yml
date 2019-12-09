@@ -22,7 +22,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew clean test --tests "web.perf.*"
+      run: ./gradlew clean test
   web-tests-windows:
     runs-on: windows-latest
 
@@ -35,7 +35,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew clean test --tests "web.perf.*"
+      run: ./gradlew clean test
   web-tests-macos:
     runs-on: macOS-latest
 
@@ -50,4 +50,4 @@ jobs:
     - name: Install Chrome
       run: 'brew update && brew cask install google-chrome'
     - name: Build with Gradle
-      run: ./gradlew clean test --tests "web.perf.*"
+      run: ./gradlew clean test

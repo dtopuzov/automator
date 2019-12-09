@@ -1,9 +1,9 @@
-package web.perf;
+package perf;
 
 import org.junit.jupiter.api.Test;
 import web.base.WebTest;
 
-class TestClass5 extends WebTest {
+class TestClass2 extends WebTest {
 
     @Test
     void testMethod1() throws InterruptedException {
