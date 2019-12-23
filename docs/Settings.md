@@ -1,6 +1,6 @@
 # Test Settings
 
-Test settings can be specified in properties files at test resources folder.
+Test org.automator.core.settings can be specified in properties files at test resources folder.
 
 ## Base Settings
 

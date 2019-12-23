@@ -1,3 +1,3 @@
 # End-To-End Tests
 
-Sample web, mobile and desktop tests based on Automator framework.
+Sample org.automator.web, org.automator.mobile and desktop tests based on Automator framework.

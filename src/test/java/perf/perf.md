@@ -1,6 +1,6 @@
 # Performance Tests 
 
-Set of dummy web tests that are used to measure performance of parallel test execution.
+Set of dummy org.automator.web tests that are used to measure performance of parallel test execution.
 
 ## Parallel Testing
 

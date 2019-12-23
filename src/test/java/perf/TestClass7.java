@@ -1,7 +1,7 @@
 package perf;
 
 import org.junit.jupiter.api.Test;
-import web.base.WebTest;
+import org.openset.automator.test.web.WebTest;
 
 class TestClass7 extends WebTest {
 

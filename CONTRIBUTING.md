@@ -14,8 +14,8 @@ Please make sure:
 ```
 2. Unit and functional tests pass before sending a pull request
 ```
-/gradlew clean test --tests "unit.*"
-/gradlew clean test --tests "e2e.*"
+./gradlew clean test --tests "unit.*"
+./gradlew clean test --tests "e2e.*"
 ```
 
 ### Submit bug reports or feature requests

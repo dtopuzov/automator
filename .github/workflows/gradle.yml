@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [assigned, opened, synchronize, reopened]
   schedule:
-    - cron:  '0 * * * *'
+    - cron:  '0 0 * * *'
       
 jobs:
   web-tests-ubuntu:
@@ -22,7 +22,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew clean test
+      run: ./gradlew clean test --tests "unit.*"
   web-tests-windows:
     runs-on: windows-latest
 
@@ -35,9 +35,9 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew clean test
+      run: ./gradlew clean test --tests "unit.*"
   web-tests-macos:
-    runs-on: macOS-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@master
@@ -50,4 +50,4 @@ jobs:
     - name: Install Chrome
       run: 'brew update && brew cask install google-chrome'
     - name: Build with Gradle
-      run: ./gradlew clean test
+      run: ./gradlew clean test --tests "unit.*"

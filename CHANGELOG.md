@@ -4,8 +4,8 @@ CHANGES IN VERSION 1.0.0
 The verify first version of Automator framework.
 
 #### General Features
-- Support of web testing on all popular desktop and mobile browsers
-- Support for testing mobile apps on Android and iOS
+- Support of org.automator.web testing on all popular desktop and org.automator.mobile browsers
+- Support for testing org.automator.mobile apps on Android and iOS
 - Support test execution on [SauceLabs](https://saucelabs.com/)
 
 ### Extras

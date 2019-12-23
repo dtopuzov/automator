@@ -13,7 +13,7 @@
 Sample tests are available in `test` package.
 
 Details:
-- [WebTests.md](src/test/java/web/WebTests.md)
+- [WebTests.md](src/test/java/org.automator.web/WebTests.md)
 
 You can execute them via following command:
 ```
