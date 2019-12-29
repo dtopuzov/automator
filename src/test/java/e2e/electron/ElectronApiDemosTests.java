@@ -1,4 +1,4 @@
-package e2e;
+package e2e.electron;
 
 import org.openset.automator.test.electron.ElectronTest;
 import org.junit.jupiter.api.DisplayName;

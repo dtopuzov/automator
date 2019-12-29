@@ -6,20 +6,27 @@ plugins {
 group 'org.openset'
 version '1.0-SNAPSHOT'
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = 1.8
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.0'
     implementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.2'
     implementation group: 'io.appium', name: 'java-client', version: '7.3.0'
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.7.1'
     implementation group: 'org.awaitility', name: 'awaitility', version: '4.0.1'
+    implementation group: 'com.sikulix', name: 'sikulixapi', version: '2.0.1'
 }
 
 test {
@@ -32,18 +39,39 @@ test {
             'junit.jupiter.execution.parallel.mode.default'            : 'same_thread',
             'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
             'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
-            'junit.jupiter.execution.parallel.config.fixed.parallelism': cores
+            'junit.jupiter.execution.parallel.config.fixed.parallelism': cores,
+            'config'                                                   : System.getProperty("config")
     ]
     maxParallelForks = cores
     forkEvery = 1
 
     testLogging {
         //noinspection GrUnresolvedAccess
-        events "passed", "skipped", "failed"
+        events 'PASSED', 'FAILED', 'SKIPPED'
+        showStandardStreams = false
     }
 
     reports {
         junitXml.enabled = true
         html.enabled = true
+    }
+
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\nTest result: ${result.resultType}"
+            println "Test summary: ${result.testCount} tests, " +
+                    "${result.successfulTestCount} succeeded, " +
+                    "${result.failedTestCount} failed, " +
+                    "${result.skippedTestCount} skipped"
+        }
+    }
+}
+
+task uberJar(type: Jar) {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
     }
 }

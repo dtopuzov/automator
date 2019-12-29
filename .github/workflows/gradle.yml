@@ -17,10 +17,10 @@ jobs:
     - uses: actions/checkout@master
       with:
         ref: ${{ github.ref }}
-    - name: Set up JDK 1.8
+    - name: Set up JDK 13
       uses: actions/setup-java@v1
       with:
-        java-version: 1.8
+        java-version: 13
     - name: Build with Gradle
       run: ./gradlew clean test --tests "unit.*"
   web-tests-windows:
@@ -30,10 +30,10 @@ jobs:
     - uses: actions/checkout@master
       with:
         ref: ${{ github.ref }}
-    - name: Set up JDK 1.8
+    - name: Set up JDK 13
       uses: actions/setup-java@v1
       with:
-        java-version: 1.8
+        java-version: 13
     - name: Build with Gradle
       run: ./gradlew clean test --tests "unit.*"
   web-tests-macos:
@@ -43,10 +43,10 @@ jobs:
     - uses: actions/checkout@master
       with:
         ref: ${{ github.ref }}
-    - name: Set up JDK 1.8
+    - name: Set up JDK 13
       uses: actions/setup-java@v1
       with:
-        java-version: 1.8
+        java-version: 13
     - name: Install Chrome
       run: 'brew update && brew cask install google-chrome'
     - name: Build with Gradle

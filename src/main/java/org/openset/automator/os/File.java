@@ -8,15 +8,15 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-@SuppressWarnings({"unused", "ResultOfMethodCallIgnored"})
-public class FileUtils {
+@SuppressWarnings("ResultOfMethodCallIgnored")
+public class File {
     /**
      * Create folder (if it do not exists).
      *
      * @param folderPath path to folder.
      */
     public static void createFolder(String folderPath) {
-        File directory = new File(folderPath);
+        java.io.File directory = new java.io.File(folderPath);
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -44,18 +44,18 @@ public class FileUtils {
     public static void extractZip(String zipFile, String extractFolder) {
         try {
             int BUFFER = 2048;
-            File file = new File(zipFile);
+            java.io.File file = new java.io.File(zipFile);
             ZipFile zip = new ZipFile(file);
 
-            new File(extractFolder).mkdir();
+            new java.io.File(extractFolder).mkdir();
             Enumeration<? extends ZipEntry> zipFileEntries = zip.entries();
 
             while (zipFileEntries.hasMoreElements()) {
                 ZipEntry entry = zipFileEntries.nextElement();
                 String currentEntry = entry.getName();
 
-                File destFile = new File(extractFolder, currentEntry);
-                File destinationParent = destFile.getParentFile();
+                java.io.File destFile = new java.io.File(extractFolder, currentEntry);
+                java.io.File destinationParent = destFile.getParentFile();
                 destinationParent.mkdirs();
 
                 if (!entry.isDirectory()) {

@@ -7,6 +7,6 @@ public class WebContext {
     public Browser browser;
 
     public WebContext(WebSettings settings) {
-
+        this.settings = settings;
     }
 }

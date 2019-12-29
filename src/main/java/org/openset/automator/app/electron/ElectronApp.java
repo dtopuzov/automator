@@ -1,16 +1,11 @@
 package org.openset.automator.app.electron;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openset.automator.app.App;
 import org.openset.automator.settings.electron.ElectronSettings;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -51,14 +46,14 @@ public class ElectronApp implements App {
             e.printStackTrace();
         }
 
-        if (settings.base.wait != null) {
-            this.driver.manage().timeouts().implicitlyWait(settings.base.wait, SECONDS);
+        if (settings.base.defaultWait != null) {
+            this.driver.manage().timeouts().implicitlyWait(settings.base.defaultWait, SECONDS);
         }
 
         if (waitSplash) {
             // Some apps use splash screens.
             // In this case when splash disappear new window is opened.
-            await().atMost(settings.base.wait, SECONDS).until(() -> this.driver.getPageSource() == null);
+            await().atMost(settings.base.defaultWait, SECONDS).until(() -> this.driver.getPageSource() == null);
             for (String handle : driver.getWindowHandles()) {
                 driver.switchTo().window(handle);
             }

@@ -1,6 +1,6 @@
 package org.openset.automator.settings.mobile;
 
-import org.openset.automator.settings.BaseSettings;
+import org.openset.automator.settings.base.BaseSettings;
 import org.openqa.selenium.Platform;
 
 /**

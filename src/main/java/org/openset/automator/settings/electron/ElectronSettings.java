@@ -1,6 +1,6 @@
 package org.openset.automator.settings.electron;
 
-import org.openset.automator.settings.BaseSettings;
+import org.openset.automator.settings.base.BaseSettings;
 
 /**
  * Settings in context of testing electron application.

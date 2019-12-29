@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class NetUtils {
+public class Network {
 
     /**
      * Find free port in range.

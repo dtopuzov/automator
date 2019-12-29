@@ -28,8 +28,8 @@ public abstract class WebPage {
      *
      * @return page title as String.
      */
-    public String getTitle() {
-        return driver.getTitle();
+    public WebDriver getDriver() {
+        return driver;
     }
 
     /**
@@ -40,5 +40,14 @@ public abstract class WebPage {
      */
     public WebDriverWait getWait(Duration duration) {
         return new WebDriverWait(driver, duration.getSeconds());
+    }
+
+    /**
+     * Get page title.
+     *
+     * @return page title as String.
+     */
+    public String getTitle() {
+        return driver.getTitle();
     }
 }

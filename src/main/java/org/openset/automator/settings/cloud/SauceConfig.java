@@ -1,7 +1,7 @@
 package org.openset.automator.settings.cloud;
 
-import org.openset.automator.os.EnvUtils;
-import org.openset.automator.settings.BaseSettings;
+import org.openset.automator.os.OS;
+import org.openset.automator.settings.base.BaseSettings;
 
 import java.util.Properties;
 
@@ -28,13 +28,13 @@ public class SauceConfig {
         this.appiumVersion = properties.getProperty("appiumVersion");
 
         this.userName = properties.getProperty("sauceUserName",
-                EnvUtils.getEnvironmentVariable("SAUCE_USER_NAME", null));
+                OS.getEnvironmentVariable("SAUCE_USER_NAME", null));
         this.accessKey = properties.getProperty("sauceAccessKey",
-                EnvUtils.getEnvironmentVariable("SAUCE_ACCESS_KEY", null));
+                OS.getEnvironmentVariable("SAUCE_ACCESS_KEY", null));
 
-        this.name = EnvUtils.getEnvironmentVariable("name", null);
-        this.tags = EnvUtils.getEnvironmentVariable("tags", null);
-        this.build = EnvUtils.getEnvironmentVariable("build", null);
+        this.name = OS.getEnvironmentVariable("name", null);
+        this.tags = OS.getEnvironmentVariable("tags", null);
+        this.build = OS.getEnvironmentVariable("build", null);
     }
 
 }

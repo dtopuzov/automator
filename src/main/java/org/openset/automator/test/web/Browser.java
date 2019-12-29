@@ -67,8 +67,8 @@ public class Browser {
                 String message = String.format("Unsupported browser type: %s", settings.web.browserType);
                 throw new Exception(message);
         }
-        if (settings.base.wait != null) {
-            this.driver.manage().timeouts().implicitlyWait(settings.base.wait, TimeUnit.SECONDS);
+        if (settings.base.defaultWait != null) {
+            this.driver.manage().timeouts().implicitlyWait(settings.base.defaultWait, TimeUnit.SECONDS);
         }
     }
 
@@ -154,7 +154,7 @@ public class Browser {
     }
 
     public WebElement find(By locator) {
-        return this.find(locator, settings.base.wait);
+        return this.find(locator, settings.base.defaultWait);
     }
 
     public void click(By locator, int timeout) {
@@ -162,6 +162,6 @@ public class Browser {
     }
 
     public void click(By locator) {
-        this.click(locator, settings.base.wait);
+        this.click(locator, settings.base.defaultWait);
     }
 }

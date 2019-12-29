@@ -1,6 +1,6 @@
 package org.openset.automator.settings.web;
 
-import org.openset.automator.settings.BaseSettings;
+import org.openset.automator.settings.base.BaseSettings;
 import org.openset.automator.settings.cloud.SauceConfig;
 
 import java.io.IOException;
