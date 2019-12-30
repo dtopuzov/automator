@@ -6,9 +6,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.remote.BrowserType;
 import org.openset.automator.settings.SettingsLoadException;
 import org.openset.automator.settings.base.BaseSettings;
+import org.openset.automator.settings.base.EnvironmentType;
 import org.openset.automator.settings.desktop.DesktopSettings;
+import org.openset.automator.settings.web.WebSettings;
+import org.openset.automator.test.common.RestartType;
 
 import java.io.File;
 
@@ -30,6 +35,8 @@ public class SettingsTests {
             BaseSettings settings = new BaseSettings();
             assertNotNull(settings.properties, "Properties should not be null.");
             assertEquals(30, settings.defaultWait, "Default wait is not correct.");
+            assertEquals(EnvironmentType.LOCAL, settings.environmentType, "Default environmentType is not correct");
+            assertEquals(RestartType.NONE, settings.restartType, "Default restartType is not correct.");
         }
 
         @Test
@@ -75,6 +82,21 @@ public class SettingsTests {
         @Test
         void testDesktopSettingsWithOutConfigFile() {
             assertThrows(SettingsLoadException.class, DesktopSettings::new);
+        }
+    }
+
+    @Nested
+    @DisplayName("WebSettings tests")
+    class WebSettingsTests {
+        @Test
+        void testWebSettingsWithConfigFile() {
+            System.setProperty("config", "google");
+            WebSettings settings = new WebSettings();
+            assertEquals(BrowserType.CHROME, settings.web.browserType);
+            assertEquals(new Dimension(1280, 1024), settings.web.browserSize);
+            assertEquals("https://www.google.com", settings.web.baseUrl);
+            assertEquals(true, settings.web.headless);
+            assertEquals(10, settings.base.defaultWait);
         }
     }
 }

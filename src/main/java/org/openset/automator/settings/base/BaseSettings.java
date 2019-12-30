@@ -92,7 +92,16 @@ public class BaseSettings {
     }
 
     private RestartType getRestartType() {
-        return RestartType.NONE;
+        RestartType restartType = RestartType.NONE;
+        String restartTypeString = this.properties.getProperty("restartType", "");
+        if (restartTypeString.toLowerCase().contains("fail")) {
+            restartType = RestartType.ON_FAILED_TEST;
+        } else if (restartTypeString.toLowerCase().contains("test")) {
+            restartType = RestartType.ON_EACH_TEST;
+        } else if (restartTypeString.toLowerCase().contains("class")) {
+            restartType = RestartType.ON_EACH_CLASS;
+        }
+        return restartType;
     }
 
     /**

@@ -17,11 +17,9 @@ public class WebTest {
      * Logic executed once before all tests:
      * - Init org.automator.core.settings.
      * - Start Browser.
-     *
-     * @throws Exception when fail to initialize org.automator.core.settings or start browser.
      */
     @BeforeAll
-    public static void beforeAll() throws Exception {
+    public static void beforeAll() {
         WebSettings settings = new WebSettings();
         context = new WebContext(settings);
         context.settings = settings;
