@@ -1,5 +1,6 @@
 package org.openset.automator.test.web;
 
+import org.openset.automator.app.web.Browser;
 import org.openset.automator.settings.web.WebSettings;
 
 public class WebContext {

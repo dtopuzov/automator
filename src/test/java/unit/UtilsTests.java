@@ -2,6 +2,8 @@ package unit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.openset.automator.os.Process;
 import org.openset.automator.os.*;
 import org.openset.automator.settings.base.BaseSettings;
@@ -9,6 +11,7 @@ import org.openset.automator.settings.base.BaseSettings;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -49,11 +52,33 @@ public class UtilsTests {
         assertTrue(Process.isRunning(getProcessName("java"), "java"), "Java process should be running.");
     }
 
+    @Test
+    @EnabledOnOs({org.junit.jupiter.api.condition.OS.LINUX, org.junit.jupiter.api.condition.OS.MAC})
+    void testProcessWithExpectedTimeout() {
+        Assertions.assertThrows(TimeoutException.class, () -> {
+            String[] command = {"tail", "-f", getJavacPath()};
+            ProcessInfo result = Process.start(command, 3);
+            assertTrue(result.getOutput().length() > 5, "Process output is not collected.");
+        });
+    }
+
+    @Test
+    @Timeout(value = 3, unit = SECONDS)
+    public void startProcessWithWaitFalseShouldNotBlockTests() throws Exception {
+        String[] command = {"tail", "-f", getJavacPath()};
+        Process.start(command, 1, false);
+    }
+
+    @SuppressWarnings("SameParameterValue")
     private String getProcessName(String processName) {
         if (OS.getOSType() == OSType.WINDOWS) {
             return processName + ".exe";
         } else {
             return processName;
         }
+    }
+
+    private String getJavacPath() {
+        return OS.getEnvironmentVariable("JAVA_HOME", "") + "/bin/javac";
     }
 }

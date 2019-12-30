@@ -28,7 +28,7 @@ public class SearchTests extends WebTest {
 
         // Perform new search and verify results
         resultsPage.searchFor("gmail");
-        resultsPage.verifyResultExists("https://www.google.com/gmail123/");
+        resultsPage.verifyResultExists("https://www.google.com/gmail/");
         resultsPage.verifyResultDoesNotExist("https://www.lipsum.com");
     }
 }

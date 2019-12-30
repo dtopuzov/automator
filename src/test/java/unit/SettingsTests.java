@@ -31,6 +31,14 @@ public class SettingsTests {
             assertNotNull(settings.properties, "Properties should not be null.");
             assertEquals(30, settings.defaultWait, "Default wait is not correct.");
         }
+
+        @Test
+        void testBaseSettingsWithNotExistingConfigFile() {
+            assertThrows(SettingsLoadException.class, () -> {
+                System.setProperty("config", "none.properties");
+                new BaseSettings();
+            });
+        }
     }
 
     @Nested

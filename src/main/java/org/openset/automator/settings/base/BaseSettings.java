@@ -24,6 +24,7 @@ public class BaseSettings {
     public String testRunHome;
     public String testAppFolder;
     public OSType os;
+    public EnvironmentType environmentType;
     public RestartType restartType;
 
     public BaseSettings() {
@@ -39,6 +40,7 @@ public class BaseSettings {
         testRunHome = System.getProperty("user.dir");
         testAppFolder = testRunHome + File.separator + "testapp";
         os = OS.getOSType();
+        environmentType = getEnvironmentType();
         restartType = getRestartType();
     }
 
@@ -102,21 +104,39 @@ public class BaseSettings {
         return ManagementFactory.getRuntimeMXBean().getInputArguments().toString().contains("jdwp");
     }
 
+    /**
+     * Get type of test environment.
+     *
+     * @return EnvironmentType value (default is Local).
+     */
+    private EnvironmentType getEnvironmentType() {
+        String type = this.properties.getProperty("environmentType", "LOCAL");
+        return EnvironmentType.valueOf(type);
+    }
+
     private Properties readProperties() {
-        String configFileProperty = System.getProperty("config", "") + ".properties";
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(configFileProperty);
-        if (inputStream != null) {
-            try {
-                Properties prop = new Properties();
-                prop.load(inputStream);
-                return prop;
-            } catch (IOException exception) {
-                String message = String.format("Failed to read settings from %s", configFileProperty);
-                throw new SettingsLoadException(message, exception);
-            }
-        } else {
-            LOGGER.warn("Failed to find properties file! Init default settings!");
+        String configSystemPropertyValue = System.getProperty("config", "");
+        if (configSystemPropertyValue.equalsIgnoreCase("")) {
+            LOGGER.warn("Config file not specified! Init default settings!");
             return new Properties();
+        } else {
+            String configFileProperty = configSystemPropertyValue + ".properties";
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(configFileProperty);
+            if (inputStream != null) {
+                try {
+                    Properties prop = new Properties();
+                    prop.load(inputStream);
+                    return prop;
+                } catch (IOException exception) {
+                    String message = String.format("Failed to read settings from %s.", configFileProperty);
+                    LOGGER.fatal(message);
+                    throw new SettingsLoadException(message, exception);
+                }
+            } else {
+                String message = String.format("Failed find %s config file.", configFileProperty);
+                LOGGER.fatal(message);
+                throw new SettingsLoadException(message);
+            }
         }
     }
 }

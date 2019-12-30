@@ -10,6 +10,8 @@ import java.util.Properties;
  */
 public class SauceConfig {
     public String url;
+    public String platformName;
+    public String browserVersion;
     public String appiumVersion;
     public String userName;
     public String accessKey;
@@ -24,17 +26,19 @@ public class SauceConfig {
      */
     public SauceConfig(BaseSettings settings) {
         Properties properties = settings.properties;
-        this.url = properties.getProperty("", "https://ondemand.eu-central-1.saucelabs.com/wd/hub");
-        this.appiumVersion = properties.getProperty("appiumVersion");
+        url = properties.getProperty("", "https://ondemand.eu-central-1.saucelabs.com/wd/hub");
+        platformName = properties.getProperty("platformName");
+        browserVersion = properties.getProperty("browserVersion");
+        appiumVersion = properties.getProperty("appiumVersion");
 
-        this.userName = properties.getProperty("sauceUserName",
+        userName = properties.getProperty("sauceUserName",
                 OS.getEnvironmentVariable("SAUCE_USER_NAME", null));
-        this.accessKey = properties.getProperty("sauceAccessKey",
+        accessKey = properties.getProperty("sauceAccessKey",
                 OS.getEnvironmentVariable("SAUCE_ACCESS_KEY", null));
 
-        this.name = OS.getEnvironmentVariable("name", null);
-        this.tags = OS.getEnvironmentVariable("tags", null);
-        this.build = OS.getEnvironmentVariable("build", null);
+        name = OS.getEnvironmentVariable("name", null);
+        tags = OS.getEnvironmentVariable("tags", null);
+        build = OS.getEnvironmentVariable("build", null);
     }
 
 }

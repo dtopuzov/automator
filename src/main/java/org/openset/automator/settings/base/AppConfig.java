@@ -20,7 +20,7 @@ public class AppConfig {
 
         // Handle missing appPath property
         if (appPath == null) {
-            throw new SettingsLoadException("Please specify properties config file!");
+            throw new SettingsLoadException("Please specify \"appPath\" property config file!");
         }
 
         try {
