@@ -3,16 +3,48 @@ package e2e.desktop.app;
 import org.junit.jupiter.api.Assertions;
 import org.openset.automator.app.desktop.DesktopApp;
 import org.openset.automator.settings.desktop.DesktopSettings;
-import org.openset.automator.sikuli.SikuliElement;
+import org.openset.automator.sikuli.SikuliElementOld;
 import org.sikuli.script.Region;
 
 public class MorseApp extends DesktopApp {
-    private SikuliElement clearEnglishText = sikuli.elementOf("ClearEnglishText");
-    private SikuliElement clearMorseText = sikuli.elementOf("ClearMorseText");
-    private SikuliElement englishToMorse = sikuli.elementOf("EnglishToMorse");
-    private SikuliElement morseToEnglish = sikuli.elementOf("MorseToEnglish");
-    private SikuliElement englishTextLabel = sikuli.elementOf("EnglishText");
-    private SikuliElement morseTextLabel = sikuli.elementOf("MorseCode");
+    /*
+    public class AppPage {
+
+    Screen sikuli;
+
+    @FindBy(image = "honey.png")
+    private SikuliElement honey;
+
+    @FindBy(image = "exit-button.png")
+    private SikuliElement exitButton;
+
+    @FindBy(image = "congratulations.png")
+    private SikuliElement congratulations;
+
+    public AppPage(Screen sikuli) {
+        this.sikuli = sikuli;
+        SikuliFactory.initElements(sikuli, this);
+    }
+
+    public void play() {
+        honey.wait(5);
+        while (!exitButton.exists(0)) {
+            honey.click();
+        }
+    }
+
+    public boolean hasThePlayerWon() {
+        return congratulations.exists(0);
+    }
+}
+
+     */
+    private SikuliElementOld clearEnglishText = sikuli.elementOf("ClearEnglishText");
+    private SikuliElementOld clearMorseText = sikuli.elementOf("ClearMorseText");
+    private SikuliElementOld englishToMorse = sikuli.elementOf("EnglishToMorse");
+    private SikuliElementOld morseToEnglish = sikuli.elementOf("MorseToEnglish");
+    private SikuliElementOld englishTextLabel = sikuli.elementOf("EnglishText");
+    private SikuliElementOld morseTextLabel = sikuli.elementOf("MorseCode");
 
     public MorseApp(DesktopSettings settings) {
         super(settings);

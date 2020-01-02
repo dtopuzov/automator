@@ -16,6 +16,32 @@ public class DesktopApp implements App {
     protected DesktopSettings settings;
     protected Sikuli sikuli;
 
+    /*
+        Screen sikuli;
+    App sikuliApp;
+
+    @BeforeEach
+    public void before() {
+        sikuli = new Screen();
+        ImagePath.add("src/test/resources/sikuli-images/sample-app.sikuli");
+        Settings.MoveMouseDelay = 0;
+        sikuliApp = App.open("java -jar " + System.getProperty("user.dir") + "/sample-app/BeeKeeper.jar");
+    }
+
+    @Test
+    public void playTheGame() {
+        AppPage appPage = new AppPage(sikuli);
+        appPage.play();
+        appPage.hasThePlayerWon();
+    }
+
+    @AfterEach
+    public void after() {
+        sikuliApp.close();
+    }
+
+     */
+
     /**
      * Initialize browser.
      *

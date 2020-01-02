@@ -10,9 +10,8 @@ on:
     - cron:  '0 0 * * *'
       
 jobs:
-  web-tests-ubuntu:
+  tests-ubuntu:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@master
       with:
@@ -21,11 +20,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 13
-    - name: Build with Gradle
-      run: ./gradlew clean test --tests "unit.*"
-  web-tests-windows:
+    - name: Unit Tests
+      run: ./gradlew clean test --tests unit.*
+    - name: Web Tests
+      run: ./gradlew clean test --tests e2e.web.* -Dconfig=google
+  tests-windows:
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@master
       with:
@@ -34,11 +34,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 13
-    - name: Build with Gradle
+    - name: Unit Tests
       run: ./gradlew clean test --tests "unit.*"
-  web-tests-macos:
+    - name: Web Tests
+      run: ./gradlew clean test --tests e2e.web.* -Dconfig=google
+  tests-macos:
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@master
       with:
@@ -48,6 +49,8 @@ jobs:
       with:
         java-version: 13
     - name: Install Chrome
-      run: 'brew update && brew cask install google-chrome'
-    - name: Build with Gradle
-      run: ./gradlew clean test --tests "unit.*"
+      run: ./scripts/setup-macos.sh
+    - name: Unit Tests
+      run: ./gradlew clean test --tests unit.*
+    - name: Web Tests
+      run: ./gradlew clean test --tests e2e.web.* -Dconfig=google

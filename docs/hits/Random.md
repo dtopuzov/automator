@@ -44,3 +44,10 @@ https://stackoverflow.com/questions/17001083/opencv-template-matching-example-in
 https://github.com/appium/appium/issues/943#issuecomment-76963366
 https://github.com/appium/appium/issues/943#issuecomment-157376691
 https://github.com/vietluonghoang/imazrzzcognizan
+
+# Fake Test Data
+https://github.com/DiUS/java-faker
+
+# Random
+https://github.com/basdijkstra?tab=repositories
+https://github.com/tourdedave

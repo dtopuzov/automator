@@ -21,12 +21,12 @@ public class Sikuli {
         screen = new Screen();
     }
 
-    public SikuliElement elementOf(String image, String description) {
+    public SikuliElementOld elementOf(String image, String description) {
         Path imagePath = Paths.get("src", "test", "resources", config.baseImagePath, image + ".png");
-        return new SikuliElement(imagePath.toAbsolutePath().toString(), description);
+        return new SikuliElementOld(imagePath.toAbsolutePath().toString(), description);
     }
 
-    public SikuliElement elementOf(String image) {
+    public SikuliElementOld elementOf(String image) {
         return elementOf(image, getDescriptionFromImageName(image));
     }
 
@@ -41,24 +41,24 @@ public class Sikuli {
         );
     }
 
-    public Region find(SikuliElement element, Float similarity, int xOffset, int yOffset) {
+    public Region find(SikuliElementOld element, Float similarity, int xOffset, int yOffset) {
         Pattern pattern = new Pattern(element.getImage()).similar(similarity);
         return screen.exists(pattern).offset(xOffset, yOffset);
     }
 
-    public Region find(SikuliElement element, int xOffset, int yOffset) {
+    public Region find(SikuliElementOld element, int xOffset, int yOffset) {
         return find(element, config.defaultSimilarity, xOffset, yOffset);
     }
 
-    public Region find(SikuliElement element) {
+    public Region find(SikuliElementOld element) {
         return find(element, config.defaultSimilarity, 0, 0);
     }
 
-    public void click(SikuliElement element, int xOffset, int yOffset) {
+    public void click(SikuliElementOld element, int xOffset, int yOffset) {
         find(element, xOffset, yOffset).click();
     }
 
-    public void click(SikuliElement element) {
+    public void click(SikuliElementOld element) {
         click(element, 0, 0);
     }
 
