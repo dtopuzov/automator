@@ -38,6 +38,8 @@ jobs:
       run: ./gradlew clean test --tests "unit.*"
     - name: Web Tests
       run: ./gradlew clean test --tests e2e.web.* -Dconfig=google
+    - name: Desktop Tests
+      run: ./gradlew clean test --tests "e2e.desktop.*" -Dconfig="morse.windows"
   tests-macos:
     runs-on: macos-latest
     steps:
