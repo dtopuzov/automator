@@ -13,8 +13,10 @@ Java based automation framework for web, mobile, desktop and APIs.
 - [Sikuli](https://github.com/RaiMan/SikuliX1) as alternative to test anything you see on the screen.
 
 ## Documentaion
+- [Requirements](docs/Requirements.md)
 - [Getting Started](docs/GettingStarted.md)
 - [Test Settings](docs/Settings.md) detailed description.
+- [Sikuli Tips & Tricks](docs/Sikuli.md) for image based testing.
 
 ## Contributing
 

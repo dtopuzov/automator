@@ -3,60 +3,48 @@ package e2e.desktop.app;
 import org.junit.jupiter.api.Assertions;
 import org.openset.automator.app.desktop.DesktopApp;
 import org.openset.automator.settings.desktop.DesktopSettings;
-import org.openset.automator.sikuli.SikuliElementOld;
+import org.openset.automator.sikuli.FindBy;
+import org.openset.automator.sikuli.SikuliElement;
 import org.sikuli.script.Region;
 
+@SuppressWarnings("unused")
 public class MorseApp extends DesktopApp {
-    /*
-    public class AppPage {
 
-    Screen sikuli;
+    @FindBy(image = "clean-english-text.png")
+    private SikuliElement clearEnglishText;
 
-    @FindBy(image = "honey.png")
-    private SikuliElement honey;
+    @FindBy(image = "clean-morse-text.png")
+    private SikuliElement clearMorseText;
 
-    @FindBy(image = "exit-button.png")
-    private SikuliElement exitButton;
+    @FindBy(image = "english-to-morse.png")
+    private SikuliElement englishToMorse;
 
-    @FindBy(image = "congratulations.png")
-    private SikuliElement congratulations;
+    @FindBy(image = "morse-to-english.png")
+    private SikuliElement morseToEnglish;
 
-    public AppPage(Screen sikuli) {
-        this.sikuli = sikuli;
-        SikuliFactory.initElements(sikuli, this);
-    }
+    @FindBy(image = "english-text-label.png")
+    private SikuliElement englishTextLabel;
 
-    public void play() {
-        honey.wait(5);
-        while (!exitButton.exists(0)) {
-            honey.click();
-        }
-    }
+    @FindBy(image = "morse-code-label.png")
+    private SikuliElement morseCodeLabel;
 
-    public boolean hasThePlayerWon() {
-        return congratulations.exists(0);
-    }
-}
+    @FindBy(image = "english-text-label.png", targetOffsetY = 200)
+    private SikuliElement englishTextBox;
 
-     */
-    private SikuliElementOld clearEnglishText = sikuli.elementOf("ClearEnglishText");
-    private SikuliElementOld clearMorseText = sikuli.elementOf("ClearMorseText");
-    private SikuliElementOld englishToMorse = sikuli.elementOf("EnglishToMorse");
-    private SikuliElementOld morseToEnglish = sikuli.elementOf("MorseToEnglish");
-    private SikuliElementOld englishTextLabel = sikuli.elementOf("EnglishText");
-    private SikuliElementOld morseTextLabel = sikuli.elementOf("MorseCode");
+    @FindBy(image = "morse-code-label.png", targetOffsetY = 200)
+    private SikuliElement morseCodeTextBox;
 
     public MorseApp(DesktopSettings settings) {
         super(settings);
     }
 
     public void typeEnglishText(String text) {
-        sikuli.click(englishTextLabel, 0, 200);
+        sikuli.click(englishTextBox);
         sikuli.type(text);
     }
 
     public void typeMorseCode(String text) {
-        sikuli.click(morseTextLabel, 0, 200);
+        sikuli.click(morseCodeTextBox);
         sikuli.type(text);
     }
 
@@ -82,7 +70,7 @@ public class MorseApp extends DesktopApp {
     }
 
     public void verifyTextVisibleInMorse(String text) {
-        Region region = sikuli.find(morseTextLabel).grow(150, 150, 0, 50);
+        Region region = sikuli.find(morseCodeLabel).grow(150, 150, 0, 50);
         Assertions.assertTrue(sikuli.isVisible(text, region), String.format("\"%s\" is not visible.", text));
     }
 }

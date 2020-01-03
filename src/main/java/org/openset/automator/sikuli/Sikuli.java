@@ -3,13 +3,7 @@ package org.openset.automator.sikuli;
 import org.openset.automator.image.Image;
 import org.openset.automator.settings.sikuli.SikuliConfig;
 import org.sikuli.basics.Settings;
-import org.sikuli.script.Pattern;
-import org.sikuli.script.Region;
-import org.sikuli.script.Screen;
-import org.sikuli.script.TextRecognizer;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.sikuli.script.*;
 
 public class Sikuli {
     private SikuliConfig config;
@@ -17,17 +11,11 @@ public class Sikuli {
 
     public Sikuli(SikuliConfig config) {
         this.config = config;
+        this.screen = new Screen();
+        ImagePath.add(config.baseImagePath);
         Settings.MinSimilarity = config.defaultSimilarity;
-        screen = new Screen();
-    }
-
-    public SikuliElementOld elementOf(String image, String description) {
-        Path imagePath = Paths.get("src", "test", "resources", config.baseImagePath, image + ".png");
-        return new SikuliElementOld(imagePath.toAbsolutePath().toString(), description);
-    }
-
-    public SikuliElementOld elementOf(String image) {
-        return elementOf(image, getDescriptionFromImageName(image));
+        Settings.MoveMouseDelay = 0;
+        Settings.ActionLogs = false;
     }
 
     private String getDescriptionFromImageName(String image) {
@@ -41,25 +29,18 @@ public class Sikuli {
         );
     }
 
-    public Region find(SikuliElementOld element, Float similarity, int xOffset, int yOffset) {
+    public Region find(SikuliElement element, Float similarity) {
         Pattern pattern = new Pattern(element.getImage()).similar(similarity);
-        return screen.exists(pattern).offset(xOffset, yOffset);
+        // TODO: When element is not found screen.exists(pattern) is null and .offset() throws NullPointerException.
+        return screen.exists(pattern, 10).offset(element.getTargetOffsetX(), element.getTargetOffsetY());
     }
 
-    public Region find(SikuliElementOld element, int xOffset, int yOffset) {
-        return find(element, config.defaultSimilarity, xOffset, yOffset);
+    public Region find(SikuliElement element) {
+        return find(element, config.defaultSimilarity);
     }
 
-    public Region find(SikuliElementOld element) {
-        return find(element, config.defaultSimilarity, 0, 0);
-    }
-
-    public void click(SikuliElementOld element, int xOffset, int yOffset) {
-        find(element, xOffset, yOffset).click();
-    }
-
-    public void click(SikuliElementOld element) {
-        click(element, 0, 0);
+    public void click(SikuliElement element) {
+        find(element).click();
     }
 
     public void type(String text) {

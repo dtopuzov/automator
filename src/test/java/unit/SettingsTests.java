@@ -53,7 +53,7 @@ public class SettingsTests {
     class DesktopSettingsTests {
         @Test
         void testDesktopSettingsWithConfigFile() {
-            System.setProperty("config", "morse");
+            System.setProperty("config", "morse.windows");
             DesktopSettings settings = new DesktopSettings();
             assertEquals(10, settings.base.defaultWait, "defaultWait is not correct.");
             assertEquals("morsecodetranslator", settings.desktop.appName, "appName not set correctly.");

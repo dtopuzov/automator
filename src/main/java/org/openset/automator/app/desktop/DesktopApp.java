@@ -2,9 +2,12 @@ package org.openset.automator.app.desktop;
 
 import org.openset.automator.app.App;
 import org.openset.automator.app.StartApplicationException;
+import org.openset.automator.os.OS;
+import org.openset.automator.os.OSType;
 import org.openset.automator.os.Process;
 import org.openset.automator.settings.desktop.DesktopSettings;
 import org.openset.automator.sikuli.Sikuli;
+import org.openset.automator.sikuli.SikuliFactory;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -50,6 +53,7 @@ public class DesktopApp implements App {
     public DesktopApp(DesktopSettings settings) {
         this.settings = settings;
         this.sikuli = new Sikuli(this.settings.sikuli);
+        SikuliFactory.initElements(this);
     }
 
     /**
@@ -79,8 +83,13 @@ public class DesktopApp implements App {
      */
     public void stop() {
         if (settings.desktop.appPath.endsWith(".jar")) {
-            Process.stop("java.exe", settings.desktop.appName);
+            String javaProcessName = "java";
+            if (OS.getOSType() == OSType.WINDOWS) {
+                javaProcessName = "java.exe";
+            }
+            Process.stop(javaProcessName, settings.desktop.appName);
         } else {
+            Process.stop("java", settings.desktop.appName);
             Process.stop(settings.desktop.appName);
         }
     }

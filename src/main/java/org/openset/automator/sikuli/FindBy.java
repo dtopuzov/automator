@@ -10,8 +10,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(FIELD)
 public @interface FindBy {
     String image() default "";
-    String[] images() default {""};
-    float similarity() default 70;
-    int x() default 0;
-    int y() default 0;
+    float similarity() default 0.9f;
+    int targetOffsetX() default 0;
+    int targetOffsetY() default 0;
 }

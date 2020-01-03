@@ -7,4 +7,4 @@ https://github.com/allure-framework/allure2
 https://github.com/dodie/scott
 
 ## Video recording of tests
-https://github.com/SergeyPirogov/video-recorder-java
+!!! https://github.com/SergeyPirogov/video-recorder-java

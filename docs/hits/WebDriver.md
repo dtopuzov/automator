@@ -1,5 +1,15 @@
 # Hints For WebDriver
 
+## Extend WebElements
+https://github.com/yandex-qatools/htmlelements
+
+## WebDriver event listener:
+https://www.toolsqa.com/selenium-webdriver/event-listener/
+https://github.com/Frameworkium/frameworkium-core/blob/master/src/main/java/com/frameworkium/core/ui/listeners/LoggingListener.java
+
+## Frameworks 
+https://github.com/Frameworkium/frameworkium-core
+
 ## Selenium in AWS Lambda
 https://github.com/blackboard/lambda-selenium
 https://github.com/smithclay/lambdium
