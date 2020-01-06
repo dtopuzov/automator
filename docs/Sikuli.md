@@ -1,4 +1,4 @@
-# Sikuli Tips & Tricks
+# Sikuli
 
 ## FAQ and Issues
 

@@ -8,7 +8,7 @@ import org.openset.automator.test.desktop.DesktopTest;
 @DisplayName("Smoke tests for More Code Translator desktop application.")
 public class MorseTests extends DesktopTest {
 
-    private MorseApp morseApp = new MorseApp(context.getSettings());
+    private MorseApp morseApp = new MorseApp(getContext().getSettings());
 
     @Test
     @DisplayName("Translate english to morse.")

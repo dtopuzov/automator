@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.util.Properties;
 
+@SuppressWarnings("WeakerAccess")
 public class BaseSettings {
 
     private static final Log LOGGER = LogFactory.getLogger(BaseSettings.class.getName());
@@ -23,6 +24,9 @@ public class BaseSettings {
     public Integer defaultWait;
     public String testRunHome;
     public String testAppFolder;
+    public String testResultsFolder;
+    public String testLogsFolder;
+    public String testScreenshotsFolder;
     public OSType os;
     public EnvironmentType environmentType;
     public RestartType restartType;
@@ -39,6 +43,9 @@ public class BaseSettings {
         defaultWait = propertyToInt("defaultWait", 30);
         testRunHome = System.getProperty("user.dir");
         testAppFolder = testRunHome + File.separator + "testapp";
+        testResultsFolder = testRunHome + File.separator + "build" + File.separator + "test-results";
+        testLogsFolder = testResultsFolder + File.separator + "logs";
+        testScreenshotsFolder = testResultsFolder + File.separator + "screenshots";
         os = OS.getOSType();
         environmentType = getEnvironmentType();
         restartType = getRestartType();

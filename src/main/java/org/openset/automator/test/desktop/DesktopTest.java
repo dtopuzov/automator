@@ -4,11 +4,18 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openset.automator.app.desktop.DesktopApp;
 import org.openset.automator.settings.desktop.DesktopSettings;
+import org.openset.automator.test.common.TestResultWatcher;
 
-public class DesktopTest {
-    protected static DesktopContext context;
+@ExtendWith(TestResultWatcher.class)
+public abstract class DesktopTest {
+    private static DesktopContext context;
+
+    public DesktopContext getContext() {
+        return context;
+    }
 
     @BeforeAll
     public static void beforeAll() {
@@ -25,6 +32,7 @@ public class DesktopTest {
 
     @AfterEach
     public void afterEach() {
+
     }
 
     @AfterAll

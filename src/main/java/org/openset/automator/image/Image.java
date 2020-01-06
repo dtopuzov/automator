@@ -111,6 +111,16 @@ public class Image {
         ImageIO.write(image, "png", new File(filePath));
     }
 
+    /**
+     * Save current screen to file.
+     *
+     * @param filePath File path as String.
+     * @throws IOException When save operation fails.
+     */
+    public static void saveScreenshot(String filePath) throws IOException {
+        save(getScreen(), filePath);
+    }
+
     private static int pixelDiff(int rgb1, int rgb2) {
         int r1 = (rgb1 >> 16) & 0xff;
         int g1 = (rgb1 >> 8) & 0xff;
