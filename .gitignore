@@ -1,6 +1,9 @@
 # macOS Files
 .DS_Store
 
+# Allure CLI
+.allure
+
 # IDE File
 .idea
 *.iml

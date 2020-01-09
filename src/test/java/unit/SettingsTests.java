@@ -1,9 +1,6 @@
 package unit;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.openqa.selenium.Dimension;
@@ -19,6 +16,7 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Test for test settings")
 public class SettingsTests {
 
@@ -31,6 +29,7 @@ public class SettingsTests {
     @DisplayName("BaseSettings tests")
     class BaseSettingsTests {
         @Test
+        @DisplayName("Init default base settings")
         void testBaseSettingsDefaults() {
             BaseSettings settings = new BaseSettings();
             assertNotNull(settings.properties, "Properties should not be null.");
@@ -40,6 +39,7 @@ public class SettingsTests {
         }
 
         @Test
+        @DisplayName("Init base settings from config file")
         void testBaseSettingsWithNotExistingConfigFile() {
             assertThrows(SettingsLoadException.class, () -> {
                 System.setProperty("config", "none.properties");

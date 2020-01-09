@@ -20,7 +20,7 @@ Please note that config files are mandatory for some test types (like ElectronTe
 
 Config file location:
 ```
-$projectRoot/src/test/resources/configs/<your-config-name>.properties
+$projectRoot/src/test/resources/<your-config-name>.properties
 ```
 
 Sample web test config file content:
@@ -46,4 +46,19 @@ In order to specify configs in IDEs please add following in VM options:
 
 Notes: 
 - Do NOT pass `.properties` extension.
-- If properties are located in subfolder of `config` folder then pass it like `subfolder/<your-config-name>`.
+- If properties are located in subfolder of `resources` folder then pass it like `subfolder/<your-config-name>`.
+
+## Execute Tests & Reporting
+
+Execute tests and generate [Allure](http://allure.qatools.ru/) reports:
+```
+gradlew clean test --tests "web.*" -Dconfig=<your-config-name> allureReport
+```
+
+For convenience you can also serve the report: 
+```
+gradlew clean test --tests "web.*" -Dconfig=<your-config-name> allureReport allureServe
+```
+
+Notes:
+- Allure [plugin](https://plugins.jenkins.io/allure-jenkins-plugin) for [Jenkins](https://jenkins.io/) is available and it auto generate reports (no need to run `allureReport` or `allureServe` tasks).

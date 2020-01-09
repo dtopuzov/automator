@@ -1,10 +1,14 @@
 package org.openset.automator.app.web;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -24,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings({"unused", "UnusedReturnValue"})
@@ -57,6 +63,7 @@ public class Browser implements App {
      *
      * @return self reference.
      */
+    @Step("Start browser")
     public Browser start() {
         if (settings.base.environmentType == EnvironmentType.LOCAL) {
             startLocal();
@@ -104,6 +111,9 @@ public class Browser implements App {
         switch (settings.web.browserType) {
             case BrowserType.CHROME:
                 ChromeOptions options = new ChromeOptions();
+                HashMap<String, String> prefs = new HashMap<>();
+                prefs.put("intl.accept_languages", "en-US");
+                options.setExperimentalOption("prefs", prefs);
                 if (settings.web.headless) {
                     options.addArguments("headless");
                 }
@@ -131,6 +141,7 @@ public class Browser implements App {
     /**
      * Stop browser instance.
      */
+    @Step("Stop browser")
     public void stop() {
         if (driver != null) {
             driver.quit();
@@ -145,6 +156,27 @@ public class Browser implements App {
      */
     public WebDriver getDriver() {
         return driver;
+    }
+
+    /**
+     * Get browser console logs.
+     *
+     * @return logs as String.
+     */
+    public String getLogs() {
+        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+        StringBuilder logs = new StringBuilder();
+        for (LogEntry entry : logEntries) {
+            logs
+                    .append(new Date(entry.getTimestamp()))
+                    .append(" ")
+                    .append(entry.getLevel())
+                    .append(" ")
+                    .append(entry.getMessage());
+            logs.append(System.lineSeparator());
+
+        }
+        return logs.toString();
     }
 
     /**
@@ -171,6 +203,7 @@ public class Browser implements App {
      * @param url to be opened.
      * @return self reference.
      */
+    @Step("Navigate to {0}")
     public Browser navigateTo(String url) {
         if (driver.getCurrentUrl().equalsIgnoreCase(url)) {
             LOGGER.info(String.format("Current URL is already '%s'.", url));
@@ -186,6 +219,7 @@ public class Browser implements App {
      *
      * @return self reference.
      */
+    @Step("Maximize browser")
     public Browser maximize() {
         driver.manage().window().maximize();
         LOGGER.info("Maximize current browser");
@@ -202,6 +236,7 @@ public class Browser implements App {
      * @param size Dimension object.
      * @return self reference.
      */
+    @Step("Set browser size to {0}")
     public Browser setSize(Dimension size) {
         driver.manage().window().setSize(size);
         String x = String.valueOf(size.getHeight());
@@ -219,6 +254,7 @@ public class Browser implements App {
         return driver.manage().window().getSize();
     }
 
+    @Step("Refresh")
     public void refresh() {
         driver.navigate().refresh();
     }
@@ -230,6 +266,7 @@ public class Browser implements App {
      *
      * @throws Exception When fail to kill a browser.
      */
+    @Step("Force kill all browser processes")
     public void killAll() throws Exception {
         stop();
         org.openset.automator.os.Process.stop(getProcessName());

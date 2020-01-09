@@ -1,7 +1,9 @@
 package unit;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.openset.automator.image.Image;
 import org.openset.automator.image.ImageComparisonResult;
 
@@ -16,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Image comparison tests.
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("Image comparison tests")
 public class ImageComparisonTests {
 
     private static BufferedImage empty;
@@ -30,6 +34,7 @@ public class ImageComparisonTests {
     }
 
     @Test
+    @DisplayName("Compare equal images")
     public void compareEqualImages() {
         ImageComparisonResult result = Image.compare(empty, empty);
         assertEquals(result.diffPercent, 0.0, "Image comparison failed.");
@@ -37,6 +42,7 @@ public class ImageComparisonTests {
     }
 
     @Test
+    @DisplayName("Compare different images")
     public void compareDifferentImages() {
         ImageComparisonResult result = Image.compare(empty, test);
         assertEquals(result.diffPercent, 10.59, "Image comparison failed.");
@@ -44,6 +50,7 @@ public class ImageComparisonTests {
     }
 
     @Test
+    @DisplayName("Compare similar images")
     void compareSimilarImages() {
         ImageComparisonResult result = Image.compare(test, testSimilar);
         assertEquals(result.diffPercent, 0.0, "Image comparison failed.");
@@ -51,6 +58,7 @@ public class ImageComparisonTests {
     }
 
     @Test
+    @DisplayName("Compare with custom tolerance")
     void compareSimilarImagesWithCustomTolerance() {
         ImageComparisonResult result = Image.compare(test, testSimilar, 1);
         assertEquals(result.diffPercent, 89.41, "Image comparison failed.");
@@ -58,6 +66,7 @@ public class ImageComparisonTests {
     }
 
     @Test
+    @DisplayName("Compare with ignore header pixels")
     void compareSimilarImagesIgnoreHeader() {
         ImageComparisonResult result = Image.compare(empty, test, 30, 50);
         assertEquals(result.diffPercent, 5.62, "Image comparison failed.");

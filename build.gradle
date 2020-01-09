@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'checkstyle'
+    id "io.qameta.allure" version "2.8.1"
     id 'com.adarshr.test-logger' version '2.0.0'
 }
 
@@ -10,10 +11,20 @@ version '1.0-SNAPSHOT'
 compileJava {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+    options.compilerArgs += '-parameters'
 }
 
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
+
+allure {
+    autoconfigure = true
+    version = '2.7.0'
+    downloadLink = 'https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/2.7.0/allure-2.7.0.zip'
+    useJUnit5 {
+        version = '2.13.1'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -28,6 +39,12 @@ dependencies {
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.7.1'
     implementation group: 'org.awaitility', name: 'awaitility', version: '4.0.1'
     implementation group: 'com.sikulix', name: 'sikulixapi', version: '2.0.1'
+    implementation 'io.qameta.allure:allure-junit5:2.13.1'
+    implementation('org.aspectj:aspectjweaver') {
+        version {
+            strictly '1.9.5'
+        }
+    }
 }
 
 test {
