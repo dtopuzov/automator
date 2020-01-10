@@ -1,5 +1,6 @@
 package org.openset.automator.test.web;
 
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -32,12 +33,10 @@ public class WebTest {
 
     @BeforeEach
     public void beforeEach() {
-
     }
 
     @AfterEach
     public void afterEach() {
-
     }
 
     /**
