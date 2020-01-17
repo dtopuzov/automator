@@ -8,7 +8,7 @@ Java based automation framework for web, mobile, desktop and APIs.
 
 ## Technology Stack
 - [Junit5](https://github.com/junit-team/junit5) as unit testing framework.
-- [Appium](https://github.com/appium/java-client) to drive org.automator.mobile and org.automator.web.
+- [Appium](https://github.com/appium/java-client) to drive web, mobile, windows and electron applications.
 - [WebDriverManager](https://github.com/bonigarcia/webdrivermanager) to manage of Selenium WebDriver binaries.
 - [Sikuli](https://github.com/RaiMan/SikuliX1) as alternative to test anything you see on the screen.
 
@@ -16,6 +16,9 @@ Java based automation framework for web, mobile, desktop and APIs.
 - [Requirements](docs/Requirements.md)
 - [Getting Started](docs/GettingStarted.md)
 - [Test Settings](docs/Settings.md) detailed description.
+- [Page Object](PageObjects.md) model and how to use it with this framework.
+- Other [Selenium](Selenium.md) related resources.
+- [Junit 5](docs/Junit.md) resources.
 - [Sikuli Tips & Tricks](docs/Sikuli.md) for image based testing.
 
 ## Contributing

@@ -1,6 +1,9 @@
 package org.openset.automator.test.web;
 
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -20,7 +23,7 @@ public abstract class WebPage {
      */
     public WebPage(WebContext webContext) {
         this.driver = webContext.browser.getDriver();
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     /**
@@ -49,5 +52,16 @@ public abstract class WebPage {
      */
     public String getTitle() {
         return driver.getTitle();
+    }
+
+    /**
+     * Get url of link by partial link text.
+     *
+     * @param text partial link text.
+     * @return url of the link as String.
+     */
+    public String getLink(String text) {
+        WebElement link = driver.findElement(By.partialLinkText(text));
+        return link.getAttribute("href");
     }
 }

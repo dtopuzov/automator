@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("unused")
-public class ResultsPage extends WebPage {
+public class SearchPage extends WebPage {
 
     private WebContext webContext;
 
@@ -28,12 +28,12 @@ public class ResultsPage extends WebPage {
     @FindBy(xpath = "//*[@id='hdtb-msb-vis']/div[2]")
     private WebElement imagesButton;
 
-    public ResultsPage(WebContext webContext) {
+    public SearchPage(WebContext webContext) {
         super(webContext);
         this.webContext = webContext;
     }
 
-    public ResultsPage(WebContext webContext, String text) {
+    public SearchPage(WebContext webContext, String text) {
         super(webContext);
         this.webContext = webContext;
         String url = webContext.settings.web.baseUrl + "/search?q=" + text;
@@ -55,20 +55,20 @@ public class ResultsPage extends WebPage {
     }
 
     @Step("Search for '{0}'")
-    public ResultsPage searchFor(String text) {
+    public SearchPage searchFor(String text) {
         searchBox.clear();
         searchBox.sendKeys(text + Keys.ENTER);
         return this;
     }
 
     @Step("Click all results link")
-    public ResultsPage lookForAll() {
+    public SearchPage lookForAll() {
         allButton.click();
         return this;
     }
 
     @Step("Click image results link")
-    public ResultsPage lookForImages() {
+    public SearchPage lookForImages() {
         imagesButton.click();
         return this;
     }

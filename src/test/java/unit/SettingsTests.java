@@ -90,11 +90,11 @@ public class SettingsTests {
     class WebSettingsTests {
         @Test
         void testWebSettingsWithConfigFile() {
-            System.setProperty("config", "google");
+            System.setProperty("config", "github");
             WebSettings settings = new WebSettings();
             assertEquals(BrowserType.CHROME, settings.web.browserType);
             assertEquals(new Dimension(1280, 1024), settings.web.browserSize);
-            assertEquals("https://www.google.com", settings.web.baseUrl);
+            assertEquals("https://github.com/", settings.web.baseUrl);
             assertEquals(true, settings.web.headless);
             assertEquals(10, settings.base.defaultWait);
         }

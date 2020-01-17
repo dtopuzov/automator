@@ -23,7 +23,7 @@ jobs:
     - name: Unit Tests
       run: ./gradlew clean test --tests unit.*
     - name: Web Tests
-      run: ./gradlew clean test --tests e2e.web.* -Dconfig=google
+      run: ./gradlew clean test --tests e2e.web.* -Dconfig=github
   tests-windows:
     runs-on: windows-latest
     steps:
@@ -37,7 +37,7 @@ jobs:
     - name: Unit Tests
       run: ./gradlew clean test --tests "unit.*"
     - name: Web Tests
-      run: ./gradlew clean test --tests e2e.web.* -Dconfig=google
+      run: ./gradlew clean test --tests e2e.web.* -Dconfig=github
     - name: Desktop Tests
       run: ./gradlew clean test --tests "e2e.desktop.*" -Dconfig="morse.windows"
   tests-macos:
@@ -55,4 +55,4 @@ jobs:
     - name: Unit Tests
       run: ./gradlew clean test --tests unit.*
     - name: Web Tests
-      run: ./gradlew clean test --tests e2e.web.* -Dconfig=google
+      run: ./gradlew clean test --tests e2e.web.* -Dconfig=github

@@ -108,6 +108,7 @@ public class Image {
      * @throws IOException When save operation fails.
      */
     public static void save(BufferedImage image, String filePath) throws IOException {
+        org.openset.automator.os.File.createFolder(new File(filePath).getParent());
         ImageIO.write(image, "png", new File(filePath));
     }
 

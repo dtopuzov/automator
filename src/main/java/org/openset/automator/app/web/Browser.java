@@ -37,6 +37,7 @@ public class Browser implements App {
     private static final Log LOGGER = LogFactory.getLogger(Browser.class.getName());
     private WebSettings settings;
     private WebDriver driver;
+    private WebDriverWait wait;
 
     /**
      * Init browser object.
@@ -65,11 +66,13 @@ public class Browser implements App {
      */
     @Step("Start browser")
     public Browser start() {
+        System.out.println("Start browser");
         if (settings.base.environmentType == EnvironmentType.LOCAL) {
             startLocal();
         } else if (settings.base.environmentType == EnvironmentType.SAUCELABS) {
             startSauce();
         }
+        wait = new WebDriverWait(driver, settings.base.defaultWait);
         return this;
     }
 
@@ -118,9 +121,9 @@ public class Browser implements App {
                     options.addArguments("headless");
                 }
                 if (settings.web.browserSize != null) {
-                    options.addArguments(String.format("window-size=%sx%s",
+                    options.addArguments(String.format("--window-size=%s,%s",
                             settings.web.browserSize.getWidth(),
-                            settings.web.browserSize.getWidth()));
+                            settings.web.browserSize.getHeight()));
                 }
                 driver = new ChromeDriver(options);
                 break;
@@ -200,18 +203,24 @@ public class Browser implements App {
     /**
      * Navigate to URL.
      *
-     * @param url to be opened.
+     * @param url   to be opened.
+     * @param force if false it will first check current urls and will navigate only if urls deffer.
      * @return self reference.
      */
-    @Step("Navigate to {0}")
-    public Browser navigateTo(String url) {
-        if (driver.getCurrentUrl().equalsIgnoreCase(url)) {
+    @Step("Navigate to <url>")
+    public Browser navigateTo(String url, boolean force) {
+        if ((!force) && (driver.getCurrentUrl().equalsIgnoreCase(url))) {
             LOGGER.info(String.format("Current URL is already '%s'.", url));
         } else {
             driver.navigate().to(url);
             LOGGER.info(String.format("Navigate to '%s'.", url));
         }
         return this;
+    }
+
+    @Step("Navigate to <url>")
+    public Browser navigateTo(String url) {
+        return navigateTo(url, false);
     }
 
     /**
@@ -338,5 +347,17 @@ public class Browser implements App {
 
     public void click(By locator) {
         click(locator, settings.base.defaultWait);
+    }
+
+    protected void waitForElementToAppear(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    protected void waitForElementToDisappear(By locator) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    protected void waitForTextToDisappear(By locator, String text) {
+        wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(locator, text)));
     }
 }
