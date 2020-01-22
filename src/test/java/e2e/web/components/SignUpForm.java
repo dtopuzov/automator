@@ -24,7 +24,7 @@ public class SignUpForm extends Widget {
         super(element);
     }
 
-    @Step("Fill SignUp Form with user=<user>, email=<email>, password=<password>")
+    @Step("Fill SignUp Form with user={user}, email={email}, password={password}")
     public void fillSignUpForm(String user, String email, String password) {
         userInput.clear();
         userInput.sendKeys(user);

@@ -1,25 +1,14 @@
-package org.openset.automator.test.common;
+package org.openset.automator.test.common.extensions;
 
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.TestWatcher;
 import org.openset.automator.log.Log;
 import org.openset.automator.log.LogFactory;
 
 import java.util.Optional;
 
-public class BaseTestExtension implements ParameterResolver, TestWatcher {
-    private static final Log LOGGER = LogFactory.getLogger(BaseTestExtension.class.getName());
-
-    @Override
-    public boolean supportsParameter(ParameterContext parameterContext,
-                                     ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType() == ExtensionContext.class;
-    }
-
-    @Override
-    public Object resolveParameter(ParameterContext parameterContext,
-                                   ExtensionContext extensionContext) throws ParameterResolutionException {
-        return extensionContext;
-    }
+public class Watcher implements TestWatcher {
+    private static final Log LOGGER = LogFactory.getLogger(Watcher.class.getName());
 
     @Override
     public void testAborted(ExtensionContext extensionContext, Throwable throwable) {

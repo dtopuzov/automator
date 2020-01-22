@@ -10,7 +10,7 @@ import org.openset.automator.settings.base.BaseSettings;
 import org.openset.automator.settings.base.EnvironmentType;
 import org.openset.automator.settings.desktop.DesktopSettings;
 import org.openset.automator.settings.web.WebSettings;
-import org.openset.automator.test.common.RestartType;
+import org.openset.automator.test.common.enums.RestartType;
 
 import java.io.File;
 
@@ -18,10 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Test for test settings")
-public class SettingsTests {
+class SettingsTests {
 
-    @BeforeEach
-    void beforeEach() {
+    @AfterEach
+    void afterEach() {
         System.clearProperty("config");
     }
 

@@ -1,4 +1,4 @@
-package org.openset.automator.test.common;
+package org.openset.automator.test.common.exceptions;
 
 import java.io.IOException;
 

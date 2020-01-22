@@ -15,7 +15,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class UtilsTests {
+class UtilsTests {
+
     @Test
     void testEnvUtils() {
         String javaHome = OS.getEnvironmentVariable("JAVA_HOME", null);
@@ -25,6 +26,7 @@ public class UtilsTests {
     @Test
     void testFileUtils() throws IOException {
         BaseSettings settings = new BaseSettings();
+        System.out.println(settings.testRunHome);
         String filePath = File.find(settings.testRunHome, "File.java");
         assertTrue(filePath.contains("src"));
     }
@@ -57,14 +59,14 @@ public class UtilsTests {
     void testProcessWithExpectedTimeout() {
         Assertions.assertThrows(TimeoutException.class, () -> {
             String[] command = {"tail", "-f", getJavacPath()};
-            ProcessInfo result = Process.start(command, 3);
+            ProcessInfo result = Process.start(command, 2);
             assertTrue(result.getOutput().length() > 5, "Process output is not collected.");
         });
     }
 
     @Test
     @Timeout(value = 3, unit = SECONDS)
-    public void startProcessWithWaitFalseShouldNotBlockTests() throws Exception {
+    void startProcessWithWaitFalseShouldNotBlockTests() throws Exception {
         String[] command = {"tail", "-f", getJavacPath()};
         Process.start(command, 1, false);
     }

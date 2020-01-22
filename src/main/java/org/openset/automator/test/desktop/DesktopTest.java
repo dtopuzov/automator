@@ -9,14 +9,14 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openset.automator.app.desktop.DesktopApp;
 import org.openset.automator.image.Image;
 import org.openset.automator.settings.desktop.DesktopSettings;
-import org.openset.automator.test.common.BaseTestExtension;
-import org.openset.automator.test.common.TakeScreenshotException;
+import org.openset.automator.test.common.extensions.Resolver;
+import org.openset.automator.test.common.exceptions.TakeScreenshotException;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-@ExtendWith(BaseTestExtension.class)
+@ExtendWith(Resolver.class)
 public abstract class DesktopTest {
     private static DesktopContext context;
 

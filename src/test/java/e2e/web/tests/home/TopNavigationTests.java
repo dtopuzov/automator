@@ -24,7 +24,7 @@ class TopNavigationTests extends WebTest {
     @Test
     @DisplayName("Link to home page exists")
     void linkToHomeExists() {
-
+        assertTrue(header.getHomeLink().isDisplayed());
     }
 
     @Test
@@ -46,7 +46,7 @@ class TopNavigationTests extends WebTest {
     @Test
     @DisplayName("Link to GitHub Enterprise exists")
     void linkToGitHubEnterpriseExists() {
-
+        assertEquals("https://github.com/enterprise", header.getLinkByText("Enterprise"));
     }
 
     @Test
@@ -68,7 +68,7 @@ class TopNavigationTests extends WebTest {
     @Test
     @DisplayName("Link to GitHub Marketplace exists")
     void linkToGitHubMarketplaceExists() {
-
+        assertEquals("https://github.com/marketplace", header.getLinkByText("Marketplace"));
     }
 
     @Test

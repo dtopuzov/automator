@@ -34,10 +34,15 @@ repositories {
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.0'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.0'
-    implementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.5.2'
+    implementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.0'
     implementation group: 'io.appium', name: 'java-client', version: '7.3.0'
-    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.7.1'
-    implementation group: 'org.awaitility', name: 'awaitility', version: '4.0.1'
+    implementation('org.seleniumhq.selenium:selenium-java') {
+        version {
+            strictly '4.0.0-alpha-4'
+        }
+    }
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.8.1'
+    implementation group: 'org.awaitility', name: 'awaitility', version: '4.0.2'
     implementation group: 'com.sikulix', name: 'sikulixapi', version: '2.0.1'
     implementation 'io.qameta.allure:allure-junit5:2.13.1'
     implementation('org.aspectj:aspectjweaver') {
@@ -51,7 +56,7 @@ test {
     useJUnitPlatform()
 
     maxHeapSize = '1G'
-    int cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    int cores = Integer.valueOf(System.getProperty("cores", String.valueOf(Runtime.runtime.availableProcessors().intdiv(2) ?: 1)))
     systemProperties = [
             'junit.jupiter.execution.parallel.enabled'                 : true,
             'junit.jupiter.execution.parallel.mode.default'            : 'same_thread',
@@ -60,8 +65,6 @@ test {
             'junit.jupiter.execution.parallel.config.fixed.parallelism': cores,
             'config'                                                   : System.getProperty("config")
     ]
-    maxParallelForks = cores
-    forkEvery = 1
 
     // Settings for test-logger gradle plugin.
     // See: https://github.com/radarsh/gradle-test-logger-plugin

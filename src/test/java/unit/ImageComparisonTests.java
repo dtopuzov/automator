@@ -20,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Image comparison tests")
-public class ImageComparisonTests {
+class ImageComparisonTests {
 
     private static BufferedImage empty;
     private static BufferedImage test;
     private static BufferedImage testSimilar;
 
     @BeforeAll
-    public static void beforeImageTests() throws IOException {
+    static void beforeImageTests() throws IOException {
         empty = getImageFile("100x100-empty.png");
         test = getImageFile("100x100-test.png");
         testSimilar = getImageFile("100x100-test-almost-the-same.png");
@@ -35,7 +35,7 @@ public class ImageComparisonTests {
 
     @Test
     @DisplayName("Compare equal images")
-    public void compareEqualImages() {
+    void compareEqualImages() {
         ImageComparisonResult result = Image.compare(empty, empty);
         assertEquals(result.diffPercent, 0.0, "Image comparison failed.");
         assertEquals(result.diffPixels, 0, "Image comparison failed.");
@@ -43,7 +43,7 @@ public class ImageComparisonTests {
 
     @Test
     @DisplayName("Compare different images")
-    public void compareDifferentImages() {
+    void compareDifferentImages() {
         ImageComparisonResult result = Image.compare(empty, test);
         assertEquals(result.diffPercent, 10.59, "Image comparison failed.");
         assertEquals(result.diffPixels, 1059, "Image comparison failed.");

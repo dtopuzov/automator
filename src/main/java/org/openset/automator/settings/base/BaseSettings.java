@@ -5,7 +5,7 @@ import org.openset.automator.log.LogFactory;
 import org.openset.automator.os.OS;
 import org.openset.automator.os.OSType;
 import org.openset.automator.settings.SettingsLoadException;
-import org.openset.automator.test.common.RestartType;
+import org.openset.automator.test.common.enums.RestartType;
 
 import java.io.File;
 import java.io.IOException;

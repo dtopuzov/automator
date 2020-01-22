@@ -34,36 +34,40 @@ public class Header extends Widget {
         super(element);
     }
 
-    @Step("Search for <text>")
+    @Step("Search for {0}")
     public void searchFor(String text) {
         searchInput.clear();
         searchInput.sendKeys(text);
         searchInput.sendKeys(Keys.ENTER);
     }
 
-    @Step
+    @Step("Click Sign In")
     public void signIn() {
         getWrappedDriver().findElement(By.partialLinkText("Sign in")).click();
     }
 
-    @Step
+    @Step("Click Sign Up")
     public void signUp() {
         getWrappedDriver().findElement(By.partialLinkText("Sign up")).click();
     }
 
-    @Step
+    @Step("Expand Why GitHub? menu")
     public void expandWhyGitHub() {
         whyGitHubButton.click();
     }
 
-    @Step
+    @Step("Expand Explore menu")
     public void expandExplore() {
         exploreButton.click();
     }
 
-    @Step
+    @Step("Expand Pricing menu")
     public void expandPricing() {
         pricingButton.click();
+    }
+
+    public WebElement getHomeLink() {
+        return homeLink;
     }
 
     public String getLinkByText(String text) {

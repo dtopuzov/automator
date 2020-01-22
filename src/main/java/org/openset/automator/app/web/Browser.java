@@ -10,7 +10,6 @@ import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -83,14 +82,17 @@ public class Browser implements App {
         if ((settings.sauce.userName != null) && (settings.sauce.accessKey != null)) {
             String url = "http://" + settings.sauce.userName + ":" + settings.sauce.accessKey + "@ondemand.saucelabs.com:80/wd/hub";
 
-            DesiredCapabilities caps = DesiredCapabilities.chrome();
-            caps.setCapability("platformName", settings.sauce.platformName);
+            MutableCapabilities sauceOptions = new MutableCapabilities();
+            ChromeOptions browserOptions = new ChromeOptions();
+            browserOptions.setExperimentalOption("w3c", true);
+            browserOptions.setCapability("platformName", settings.sauce.platformName);
             if (settings.sauce.browserVersion != null) {
-                caps.setCapability("browserVersion", settings.sauce.browserVersion);
+                browserOptions.setCapability("browserVersion", settings.sauce.browserVersion);
             }
+            browserOptions.setCapability("sauce:options", sauceOptions);
 
             try {
-                driver = new RemoteWebDriver(new URL(url), caps);
+                driver = new RemoteWebDriver(new URL(url), browserOptions);
             } catch (MalformedURLException e) {
                 throw new StartApplicationException("Malformed URL exception.", e);
             }
@@ -207,7 +209,7 @@ public class Browser implements App {
      * @param force if false it will first check current urls and will navigate only if urls deffer.
      * @return self reference.
      */
-    @Step("Navigate to <url>")
+    @Step("Navigate to {0}")
     public Browser navigateTo(String url, boolean force) {
         if ((!force) && (driver.getCurrentUrl().equalsIgnoreCase(url))) {
             LOGGER.info(String.format("Current URL is already '%s'.", url));
@@ -218,7 +220,7 @@ public class Browser implements App {
         return this;
     }
 
-    @Step("Navigate to <url>")
+    @Step("Navigate to {0}")
     public Browser navigateTo(String url) {
         return navigateTo(url, false);
     }
@@ -263,7 +265,7 @@ public class Browser implements App {
         return driver.manage().window().getSize();
     }
 
-    @Step("Refresh")
+    @Step("Refresh current browser")
     public void refresh() {
         driver.navigate().refresh();
     }

@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -15,6 +16,7 @@ import java.time.Duration;
 public abstract class WebPage {
 
     private WebDriver driver;
+    private WebContext webContext;
 
     /**
      * Init base org.automator.web page.
@@ -22,6 +24,7 @@ public abstract class WebPage {
      * @param webContext instance of WebContext.
      */
     public WebPage(WebContext webContext) {
+        this.webContext = webContext;
         this.driver = webContext.browser.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -46,6 +49,15 @@ public abstract class WebPage {
     }
 
     /**
+     * Get WebDriverWait.
+     *
+     * @return WebDriverWait object.
+     */
+    public WebDriverWait getWait() {
+        return getWait(Duration.ofSeconds(webContext.settings.base.defaultWait));
+    }
+
+    /**
      * Get page title.
      *
      * @return page title as String.
@@ -55,13 +67,37 @@ public abstract class WebPage {
     }
 
     /**
-     * Get url of link by partial link text.
+     * Get page url.
      *
-     * @param text partial link text.
+     * @return page url as String.
+     */
+    public String getUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    /**
+     * Get url of link by text.
+     *
+     * @param text partial text of the link.
      * @return url of the link as String.
      */
-    public String getLink(String text) {
-        WebElement link = driver.findElement(By.partialLinkText(text));
+    public String getLinkByText(String text) {
+        WebElement link = this.driver.findElement(By.partialLinkText(text));
         return link.getAttribute("href");
+    }
+
+    /**
+     * Check if element is visible.
+     *
+     * @param locator of the element.
+     * @return true if visible.
+     */
+    public boolean isElementVisible(By locator) {
+        try {
+            getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
