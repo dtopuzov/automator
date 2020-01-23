@@ -3,8 +3,6 @@ package org.openset.automator.settings.desktop;
 import org.openset.automator.settings.base.AppConfig;
 import org.openset.automator.settings.base.BaseSettings;
 
-import java.io.File;
-
 /**
  * Desktop specific settings.
  */

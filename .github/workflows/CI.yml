@@ -21,9 +21,9 @@ jobs:
       with:
         java-version: 13
     - name: Unit Tests
-      run: ./gradlew clean test --tests unit.*
+      run: ./gradlew clean checkstyleMain checkstyleTest test --tests "tests.unit.*"
     - name: Web Tests
-      run: ./gradlew clean test --tests e2e.web.* -Dconfig=github
+      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig=github -Dcores=2
   tests-windows:
     runs-on: windows-latest
     steps:
@@ -35,11 +35,11 @@ jobs:
       with:
         java-version: 13
     - name: Unit Tests
-      run: ./gradlew clean test --tests "unit.*"
+      run: ./gradlew clean checkstyleMain checkstyleTest test --tests "tests.unit.*"
     - name: Web Tests
-      run: ./gradlew clean test --tests e2e.web.* -Dconfig=github
+      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig=github -Dcores=2
     - name: Desktop Tests
-      run: ./gradlew clean test --tests "e2e.desktop.*" -Dconfig="morse.windows"
+      run: ./gradlew clean test --tests "tests.e2e.desktop.*" -Dconfig="morse.windows"
   tests-macos:
     runs-on: macos-latest
     steps:
@@ -53,6 +53,6 @@ jobs:
     - name: Install Chrome
       run: ./scripts/setup-macos.sh
     - name: Unit Tests
-      run: ./gradlew clean test --tests unit.*
+      run: ./gradlew clean checkstyleMain checkstyleTest test --tests "tests.unit.*"
     - name: Web Tests
-      run: ./gradlew clean test --tests e2e.web.* -Dconfig=github
+      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig=github -Dcores=2

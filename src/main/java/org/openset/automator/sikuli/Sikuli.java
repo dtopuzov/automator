@@ -9,6 +9,11 @@ public class Sikuli {
     private SikuliConfig config;
     private Screen screen;
 
+    /**
+     * Init Sikuli.
+     *
+     * @param config instance of SikuliConfig.
+     */
     public Sikuli(SikuliConfig config) {
         this.config = config;
         this.screen = new Screen();
@@ -29,6 +34,13 @@ public class Sikuli {
         );
     }
 
+    /**
+     * Find element on screen.
+     *
+     * @param element    SikuliElement.
+     * @param similarity similarity.
+     * @return region
+     */
     public Region find(SikuliElement element, Float similarity) {
         Pattern pattern = new Pattern(element.getImage()).similar(similarity);
         // TODO: When element is not found screen.exists(pattern) is null and .offset() throws NullPointerException.

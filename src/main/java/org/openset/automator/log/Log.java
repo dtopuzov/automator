@@ -46,10 +46,14 @@ public class Log {
     }
 
     public void separator() {
-        String title = "";
-        this.separator(title);
+        this.separator("");
     }
 
+    /**
+     * Log some text separated from other lines with "=" symbols.
+     *
+     * @param title text.
+     */
     public void separator(String title) {
         if (title.equalsIgnoreCase("")) {
             title = "===";

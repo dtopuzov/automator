@@ -8,7 +8,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Process {
-    public static ProcessInfo start(String[] command, int timeout, boolean wait) throws IOException, InterruptedException, TimeoutException {
+    /**
+     * Execute command.
+     *
+     * @param command Command as array of Strings.
+     * @param timeout timeout in seconds.
+     * @param wait    if True it will wait until command exist, otherwise it will just start the command and leave it.
+     * @return result of command as ProcessInfo object.
+     * @throws IOException          when fail to get STDOUT and STDERR.
+     * @throws InterruptedException when fail to execute command.
+     * @throws TimeoutException     when timeout reached.
+     */
+    public static ProcessInfo start(String[] command, int timeout, boolean wait)
+            throws IOException, InterruptedException, TimeoutException {
         java.lang.Process p = new ProcessBuilder(command).start();
         if (wait) {
             p.waitFor(timeout, TimeUnit.SECONDS);
@@ -18,7 +30,8 @@ public class Process {
         if (wait) {
             if (p.isAlive()) {
                 p.destroyForcibly();
-                String e = String.format("Process '%s' timeout after %s seconds.", String.join(" ", command), timeout);
+                String e = String.format("Process '%s' timeout after %s seconds.",
+                        String.join(" ", command), timeout);
                 throw new TimeoutException(e);
             }
             String output = read(input) + "\n" + read(error);
@@ -28,18 +41,55 @@ public class Process {
         }
     }
 
-    public static ProcessInfo start(String[] command, boolean wait) throws IOException, InterruptedException, TimeoutException {
+    /**
+     * Execute command with default timeout of 30 seconds.
+     *
+     * @param command Command as array of Strings.
+     * @param wait    if True it will wait until command exist, otherwise it will just start the command and leave it.
+     * @return result of command as ProcessInfo object.
+     * @throws IOException          when fail to get STDOUT and STDERR.
+     * @throws InterruptedException when fail to execute command.
+     * @throws TimeoutException     when timeout reached.
+     */
+    public static ProcessInfo start(String[] command, boolean wait)
+            throws IOException, InterruptedException, TimeoutException {
         return start(command, 30, wait);
     }
 
-    public static ProcessInfo start(String[] command, int timeout) throws IOException, InterruptedException, TimeoutException {
+    /**
+     * Execute command and wait until it exit.
+     *
+     * @param command Command as array of Strings.
+     * @param timeout timeout in seconds.
+     * @return result of command as ProcessInfo object.
+     * @throws IOException          when fail to get STDOUT and STDERR.
+     * @throws InterruptedException when fail to execute command.
+     * @throws TimeoutException     when timeout reached.
+     */
+    public static ProcessInfo start(String[] command, int timeout)
+            throws IOException, InterruptedException, TimeoutException {
         return start(command, timeout, true);
     }
 
+    /**
+     * Execute command and wait until it exit with default timeout of 30 seconds.
+     *
+     * @param command Command as array of Strings.
+     * @return result of command as ProcessInfo object.
+     * @throws IOException          when fail to get STDOUT and STDERR.
+     * @throws InterruptedException when fail to execute command.
+     * @throws TimeoutException     when timeout reached.
+     */
     public static ProcessInfo start(String[] command) throws IOException, InterruptedException, TimeoutException {
         return start(command, 30, true);
     }
 
+    /**
+     * Stop processes by specified command or commandline.
+     *
+     * @param command     command or executable name.
+     * @param commandline partial commandline string.
+     */
     public static void stop(String command, String commandline) {
         if (commandline != null) {
             Stream<ProcessHandle> processes = ProcessHandle.allProcesses()
@@ -61,10 +111,21 @@ public class Process {
         }
     }
 
+    /**
+     * Stop processes by specified command.
+     *
+     * @param command command or executable name.
+     */
     public static void stop(String command) {
         stop(command, null);
     }
 
+    /**
+     * Check if processes by specified command or commandline os running.
+     *
+     * @param command     command or executable name.
+     * @param commandline partial commandline string.
+     */
     public static boolean isRunning(String command, String commandline) {
         Stream<ProcessHandle> processes = ProcessHandle.allProcesses()
                 .filter(ph -> ph.info().command().isPresent())
@@ -80,6 +141,11 @@ public class Process {
         }
     }
 
+    /**
+     * Check if processes by specified command.
+     *
+     * @param command command or executable name.
+     */
     public static boolean isRunning(String command) {
         return isRunning(command, null);
     }
@@ -92,8 +158,8 @@ public class Process {
 
     /**
      * Returns the full command-line of the process.
-     * <p>
-     * This is a workaround for
+     *
+     * <p>This is a workaround for
      * <a href="https://stackoverflow.com/a/46768046/14731">https://stackoverflow.com/a/46768046/14731</a>
      *
      * @param processHandle a process handle
@@ -106,12 +172,14 @@ public class Process {
         }
         long desiredProcessid = processHandle.pid();
         try {
-            java.lang.Process process = new ProcessBuilder("wmic", "process", "where", "ProcessID=" + desiredProcessid, "get",
-                    "commandline", "/format:list").
-                    redirectErrorStream(true).
-                    start();
-            try (InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
-                 BufferedReader reader = new BufferedReader(inputStreamReader)) {
+            java.lang.Process process = new ProcessBuilder("wmic",
+                    "process", "where", "ProcessID=" + desiredProcessid, "get", "commandline", "/format:list")
+                    .redirectErrorStream(true)
+                    .start();
+            try (
+                    InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
+                    BufferedReader reader = new BufferedReader(inputStreamReader)
+            ) {
                 while (true) {
                     String line = reader.readLine();
                     if (line == null) {
@@ -120,7 +188,6 @@ public class Process {
                     if (!line.startsWith("CommandLine=")) {
                         continue;
                     }
-                    // System.out.println(Optional.of(line.substring("CommandLine=".length())).get());
                     return Optional.of(line.substring("CommandLine=".length()));
                 }
             }

@@ -8,22 +8,27 @@ import java.lang.reflect.Field;
 @SuppressWarnings("unused")
 public class SikuliFactory {
 
-    public static void initElements(Object page) {
-        Class<?> proxyIn = page.getClass();
+    /**
+     * Init Sikuli element.
+     *
+     * @param screen object.
+     */
+    public static void initElements(Object screen) {
+        Class<?> proxyIn = screen.getClass();
         while (proxyIn != Object.class) {
-            proxyFields(page, proxyIn);
+            proxyFields(screen, proxyIn);
             proxyIn = proxyIn.getSuperclass();
         }
     }
 
-    private static void proxyFields(Object page, Class<?> proxyIn) {
+    private static void proxyFields(Object screen, Class<?> proxyIn) {
         Field[] fields = proxyIn.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
             if (field.getType().getTypeName().contains("SikuliElement")) {
                 SikuliElement sikuliElement = createSikuliElement(field);
                 try {
-                    field.set(page, sikuliElement);
+                    field.set(screen, sikuliElement);
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }

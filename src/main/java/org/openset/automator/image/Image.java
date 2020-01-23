@@ -11,6 +11,12 @@ import java.io.IOException;
  */
 public class Image {
 
+    /**
+     * Get image of current desktop screen.
+     *
+     * @param rectangle area of screen to be captured.
+     * @return image as BufferedImage.
+     */
     public static BufferedImage getScreen(Rectangle rectangle) {
         try {
             Robot robot = new Robot();
@@ -20,6 +26,11 @@ public class Image {
         }
     }
 
+    /**
+     * Get image of current desktop screen.
+     *
+     * @return image as BufferedImage.
+     */
     public static BufferedImage getScreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle rectangle = new Rectangle(0, 0, screenSize.width, screenSize.height);

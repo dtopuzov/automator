@@ -43,7 +43,7 @@ public class File {
      */
     public static void extractZip(String zipFile, String extractFolder) {
         try {
-            int BUFFER = 2048;
+            int buffer = 2048;
             java.io.File file = new java.io.File(zipFile);
             ZipFile zip = new ZipFile(file);
 
@@ -62,12 +62,12 @@ public class File {
                     BufferedInputStream is = new BufferedInputStream(zip
                             .getInputStream(entry));
                     int currentByte;
-                    byte[] data = new byte[BUFFER];
+                    byte[] data = new byte[buffer];
                     FileOutputStream fos = new FileOutputStream(destFile);
                     BufferedOutputStream dest = new BufferedOutputStream(fos,
-                            BUFFER);
+                            buffer);
 
-                    while ((currentByte = is.read(data, 0, BUFFER)) != -1) {
+                    while ((currentByte = is.read(data, 0, buffer)) != -1) {
                         dest.write(data, 0, currentByte);
                     }
                     dest.flush();
@@ -80,6 +80,14 @@ public class File {
         }
     }
 
+    /**
+     * Find file in path.
+     *
+     * @param basePath root folder where search starts.
+     * @param fileName file name.
+     * @return absolute path for first file found.
+     * @throws IOException when root does not exists or failed to find file.
+     */
     public static String find(String basePath, String fileName) throws IOException {
         Path hit = Files.walk(Paths.get(basePath))
                 .filter(file -> file.getFileName().toString().equalsIgnoreCase(fileName))

@@ -1,11 +1,11 @@
 package org.openset.automator.app.electron;
 
-import org.openset.automator.app.Page;
-import org.openset.automator.test.electron.ElectronContext;
-import org.openset.automator.settings.electron.ElectronSettings;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openset.automator.app.Page;
+import org.openset.automator.settings.electron.ElectronSettings;
+import org.openset.automator.test.electron.ElectronContext;
 
 import java.time.Duration;
 
@@ -44,6 +44,6 @@ public abstract class ElectronPage implements Page {
      * @return WebDriverWait object.
      */
     public WebDriverWait getWait(Duration duration) {
-        return new WebDriverWait(driver, duration.getSeconds());
+        return new WebDriverWait(driver, duration);
     }
 }

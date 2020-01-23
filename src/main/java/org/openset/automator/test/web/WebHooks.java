@@ -2,8 +2,6 @@ package org.openset.automator.test.web;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.openset.automator.test.web.WebContext;
-import org.openset.automator.test.web.WebContextFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +15,12 @@ public class WebHooks implements BeforeAllCallback, ExtensionContext.Store.Close
     private static List<WebContext> webContexts = new ArrayList<>();
 
     /**
-     * Separate method with 'synchronized static' required for make sure procedure will be executed
+     * Init WebContext instance and start browser.
+     *
+     * <p>Separate method with 'synchronized static' required for make sure procedure will be executed
      * only once across all simultaneously running threads
      */
-    synchronized private static void systemSetup() {
+    private static synchronized void systemSetup() {
         // 'if' is used to make sure procedure will be executed only once, not before every class
         Boolean isSystemReady = systemReady.get();
         if (isSystemReady != null) {
@@ -50,11 +50,13 @@ public class WebHooks implements BeforeAllCallback, ExtensionContext.Store.Close
     }
 
     /**
-     * CloseableResource implementation, adding value into GLOBAL context is required to  registers a callback hook
+     * Stop running browsers.
+     *
+     * <p>CloseableResource implementation, adding value into GLOBAL context is required to  registers a callback hook
      * With such steps close() method will be executed only once in the end of test execution
      */
     @Override
-    synchronized public void close() {
+    public synchronized void close() {
         // clean data from system
         for (WebContext webContext : webContexts) {
             if (webContext.browser != null) {

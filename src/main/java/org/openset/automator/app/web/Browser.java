@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -71,7 +72,7 @@ public class Browser implements App {
         } else if (settings.base.environmentType == EnvironmentType.SAUCELABS) {
             startSauce();
         }
-        wait = new WebDriverWait(driver, settings.base.defaultWait);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(settings.base.defaultWait));
         return this;
     }
 
@@ -82,14 +83,12 @@ public class Browser implements App {
         if ((settings.sauce.userName != null) && (settings.sauce.accessKey != null)) {
             String url = "http://" + settings.sauce.userName + ":" + settings.sauce.accessKey + "@ondemand.saucelabs.com:80/wd/hub";
 
-            MutableCapabilities sauceOptions = new MutableCapabilities();
             ChromeOptions browserOptions = new ChromeOptions();
             browserOptions.setExperimentalOption("w3c", true);
             browserOptions.setCapability("platformName", settings.sauce.platformName);
             if (settings.sauce.browserVersion != null) {
                 browserOptions.setCapability("browserVersion", settings.sauce.browserVersion);
             }
-            browserOptions.setCapability("sauce:options", sauceOptions);
 
             try {
                 driver = new RemoteWebDriver(new URL(url), browserOptions);
@@ -272,8 +271,8 @@ public class Browser implements App {
 
     /**
      * Kill all instances of this browser type.
-     * <p>
-     * Call stop() and then kill all processes matching browser process name.
+     *
+     * <p>Call stop() and then kill all processes matching browser process name.
      *
      * @throws Exception When fail to kill a browser.
      */
@@ -333,7 +332,7 @@ public class Browser implements App {
      * @return WebElement.
      */
     public WebElement find(By locator, int timeout) {
-        new WebDriverWait(driver, timeout)
+        new WebDriverWait(driver, Duration.ofSeconds(timeout))
                 .ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.elementToBeClickable(locator));
         return driver.findElement(locator);

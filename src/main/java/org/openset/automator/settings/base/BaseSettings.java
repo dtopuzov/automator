@@ -31,6 +31,9 @@ public class BaseSettings {
     public EnvironmentType environmentType;
     public RestartType restartType;
 
+    /**
+     * Init base settings.
+     */
     public BaseSettings() {
         properties = readProperties();
         initSettings();

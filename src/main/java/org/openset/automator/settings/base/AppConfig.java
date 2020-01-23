@@ -54,7 +54,7 @@ public class AppConfig {
         }
     }
 
-    public static boolean isURL(String url) {
+    protected static boolean isURL(String url) {
         try {
             new URL(url);
             return true;
