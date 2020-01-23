@@ -16,8 +16,8 @@ Java based automation framework for web, mobile, desktop and APIs.
 - [Requirements](docs/Requirements.md)
 - [Getting Started](docs/GettingStarted.md)
 - [Test Settings](docs/Settings.md) detailed description.
-- [Page Object](PageObjects.md) model and how to use it with this framework.
-- Other [Selenium](Selenium.md) related resources.
+- [Page Object](docs/PageObjects.md) model and how to use it with this framework.
+- Other [Selenium](docs/Selenium.md) related resources.
 - [Junit 5](docs/Junit.md) resources.
 - [Sikuli Tips & Tricks](docs/Sikuli.md) for image based testing.
 
