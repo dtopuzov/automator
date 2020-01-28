@@ -7,6 +7,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @SuppressWarnings("unused")
 public class Header extends Widget {
     @FindBy(xpath = "//a[@aria-label='Homepage']")
@@ -32,6 +35,16 @@ public class Header extends Widget {
 
     protected Header(WebElement element) {
         super(element);
+    }
+
+    @Step("Header is visible and contains expected elements")
+    public void validate() {
+        assertAll(() -> assertTrue(homeLink.isDisplayed()),
+                () -> assertTrue(whyGitHubButton.isDisplayed()),
+                () -> assertTrue(exploreButton.isDisplayed()),
+                () -> assertTrue(pricingButton.isDisplayed()),
+                () -> assertTrue(searchInput.isDisplayed())
+        );
     }
 
     @Step("Search for {0}")

@@ -100,4 +100,14 @@ public abstract class WebPage {
             return false;
         }
     }
+
+    /**
+     * Check if text is visible.
+     *
+     * @param text as String.
+     * @return true if visible.
+     */
+    public boolean isTextVisible(String text) {
+        return isElementVisible(By.xpath("//*[contains(text(),'" + text + "')]"));
+    }
 }

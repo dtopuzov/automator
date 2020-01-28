@@ -38,7 +38,7 @@ dependencies {
     implementation group: 'io.appium', name: 'java-client', version: '7.3.0'
     implementation('org.seleniumhq.selenium:selenium-java') {
         version {
-            strictly '4.0.0-alpha-4'
+            strictly '4.0.0-alpha-3'
         }
     }
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.8.1'
