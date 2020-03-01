@@ -1,10 +1,10 @@
 package tests.e2e.web.tests.home;
 
+import org.junit.jupiter.api.*;
+import org.openset.automator.test.web.WebTest;
 import tests.e2e.web.components.Footer;
 import tests.e2e.web.components.SignUpForm;
 import tests.e2e.web.pages.HomePage;
-import org.junit.jupiter.api.*;
-import org.openset.automator.test.web.WebTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -73,11 +73,13 @@ class FooterTests extends WebTest {
         @Test
         @DisplayName("Platform links are correct")
         void platformLinksAreCorrect() {
-            assertEquals("https://developer.github.com/", footer.getLinkByText("Developer API"));
-            assertEquals("http://partner.github.com/", footer.getLinkByText("Partners"));
-            assertEquals("https://atom.io/", footer.getLinkByText("Atom"));
-            assertEquals("http://electron.atom.io/", footer.getLinkByText("Electron"));
-            assertEquals("https://desktop.github.com/", footer.getLinkByText("GitHub Desktop"));
+            assertAll("Verify platform links",
+                    () -> assertEquals("https://developer.github.com/", footer.getLinkByText("Developer API")),
+                    () -> assertEquals("http://partner.github.com/", footer.getLinkByText("Partners")),
+                    () -> assertEquals("https://atom.io/", footer.getLinkByText("Atom")),
+                    () -> assertEquals("http://electronjs.org/", footer.getLinkByText("Electron")),
+                    () -> assertEquals("https://desktop.github.com/", footer.getLinkByText("GitHub Desktop"))
+            );
         }
 
         @Test
