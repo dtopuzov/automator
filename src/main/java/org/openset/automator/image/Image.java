@@ -3,8 +3,7 @@ package org.openset.automator.image;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Image utils.
@@ -131,6 +130,19 @@ public class Image {
      */
     public static void saveScreenshot(String filePath) throws IOException {
         save(getScreen(), filePath);
+    }
+
+    /**
+     * Convert BufferedImage to InputStream.
+     *
+     * @param image as BufferedImage.
+     * @return InputStream
+     * @throws IOException when fail to read image.
+     */
+    public static InputStream bufferedImageToInputStream(BufferedImage image) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", os);
+        return new ByteArrayInputStream(os.toByteArray());
     }
 
     private static int pixelDiff(int rgb1, int rgb2) {

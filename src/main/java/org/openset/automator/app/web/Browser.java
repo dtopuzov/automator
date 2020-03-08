@@ -72,7 +72,7 @@ public class Browser implements App {
         } else if (settings.base.environmentType == EnvironmentType.SAUCELABS) {
             startSauce();
         }
-        wait = new WebDriverWait(driver, Duration.ofSeconds(settings.base.defaultWait));
+        wait = new WebDriverWait(driver, settings.base.defaultWait);
         return this;
     }
 
@@ -332,7 +332,7 @@ public class Browser implements App {
      * @return WebElement.
      */
     public WebElement find(By locator, int timeout) {
-        new WebDriverWait(driver, Duration.ofSeconds(timeout))
+        new WebDriverWait(driver, timeout)
                 .ignoring(StaleElementReferenceException.class)
                 .until(ExpectedConditions.elementToBeClickable(locator));
         return driver.findElement(locator);

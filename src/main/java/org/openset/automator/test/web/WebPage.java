@@ -45,7 +45,7 @@ public abstract class WebPage {
      * @return WebDriverWait object.
      */
     public WebDriverWait getWait(Duration duration) {
-        return new WebDriverWait(driver, duration);
+        return new WebDriverWait(driver, duration.getSeconds());
     }
 
     /**

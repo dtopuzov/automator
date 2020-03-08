@@ -41,17 +41,11 @@ public class WebTest {
             String basePath = context.settings.base.testScreenshotsFolder;
             BufferedImage image = context.browser.getScreenshot();
             Image.save(image, basePath + File.separator + testName + ".png");
-            Allure.addAttachment("Screenshot on test fail", "image/png", bufferedImageTypeByteArray(image), ".png");
+            Allure.addAttachment("Screenshot on test fail", "image/png", Image.bufferedImageToInputStream(image), ".png");
         } catch (IOException e) {
             throw new TakeScreenshotException("Failed to take screenshot of current browser.", e);
         }
 
         // Get logs
-    }
-
-    private InputStream bufferedImageTypeByteArray(BufferedImage image) throws IOException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write(image, "png", os);
-        return new ByteArrayInputStream(os.toByteArray());
     }
 }

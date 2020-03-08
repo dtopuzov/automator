@@ -60,7 +60,7 @@ public class Sikuli {
     }
 
     public boolean isVisible(String text, Region region) {
-        String actualText = TextRecognizer.doOCR(Image.getScreen(region.getRect()));
+        String actualText = OCR.readText(Image.getScreen(region.getRect()));
         return actualText.contains(text);
     }
 }
