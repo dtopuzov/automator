@@ -49,6 +49,10 @@ public class MobileApp implements App {
         }
     }
 
+    public void restart() {
+        driver.resetApp();
+    }
+
     /**
      * Get screenshot.
      *

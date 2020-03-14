@@ -56,9 +56,8 @@ public class AppiumClient {
 
     private DesiredCapabilities getCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, settings.mobile.platform);
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-                String.valueOf(settings.mobile.platformVersion));
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, settings.mobile.platform.toString());
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, settings.mobile.platformVersion.toString());
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, settings.mobile.deviceName);
 
         // Set application under test
@@ -81,7 +80,6 @@ public class AppiumClient {
 
         // Set Android specific settings.
         if (settings.mobile.platform == Platform.ANDROID) {
-            capabilities.setCapability("buildToolsVersion", "28.0.3");
             capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.ANDROID_UIAUTOMATOR2);
             String avd = settings.mobile.avdName;
             if (avd != null) {

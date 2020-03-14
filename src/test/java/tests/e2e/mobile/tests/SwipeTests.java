@@ -3,6 +3,7 @@ package tests.e2e.mobile.tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openset.automator.test.mobile.MobileTest;
+import tests.e2e.mobile.components.Footer;
 import tests.e2e.mobile.pages.HomePage;
 import tests.e2e.mobile.pages.SwipePage;
 
@@ -12,7 +13,7 @@ public class SwipeTests extends MobileTest {
     @BeforeEach
     public void beforeEach() {
         HomePage homePage = new HomePage(context);
-        homePage.footer.navigateToSwipe();
+        homePage.footer.navigateTo(Footer.FooterItem.SWIPE);
         swipePage = new SwipePage(context);
     }
 

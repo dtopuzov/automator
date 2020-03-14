@@ -25,7 +25,6 @@ public class WebHooks implements BeforeAllCallback, ExtensionContext.Store.Close
         Boolean isSystemReady = systemReady.get();
         if (isSystemReady != null) {
             if (!isSystemReady) {
-                System.out.println("!!! Thread:" + Thread.currentThread().getId());
                 systemReady.set(true);
                 WebContext webContext = WebContextFactory.getInstance().getWebContext();
                 webContext.browser.start();

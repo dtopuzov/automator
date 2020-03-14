@@ -1,23 +1,23 @@
 package org.openset.automator.test.mobile;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openset.automator.test.web.WebContext;
 
 import java.time.Duration;
 
 /**
  * Base mobile abstraction.
  */
+@SuppressWarnings("unused")
 public abstract class MobilePage {
 
-    private AppiumDriver driver;
+    private AppiumDriver<?> driver;
     private MobileContext mobileContext;
 
     /**
@@ -36,12 +36,12 @@ public abstract class MobilePage {
      *
      * @return page title as String.
      */
-    public AppiumDriver getDriver() {
+    public AppiumDriver<?> getDriver() {
         return driver;
     }
 
     /**
-     * Get WebDriverWait.
+     * Get WebDriverWait with duration.
      *
      * @param duration duration.
      * @return WebDriverWait object.
@@ -51,7 +51,7 @@ public abstract class MobilePage {
     }
 
     /**
-     * Get WebDriverWait.
+     * Get WebDriverWait with default wait timeout (from settings).
      *
      * @return WebDriverWait object.
      */
@@ -59,18 +59,33 @@ public abstract class MobilePage {
         return getWait(Duration.ofSeconds(mobileContext.settings.base.defaultWait));
     }
 
-    /**
-     * Check if element is visible.
-     *
-     * @param locator of the element.
-     * @return true if visible.
-     */
-    public boolean isElementVisible(By locator) {
+    public MobileElement findElement(By locator, Duration timeout) {
         try {
-            getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
-            return true;
+            return (MobileElement) getWait(timeout).until(ExpectedConditions.visibilityOfElementLocated(locator));
         } catch (Exception e) {
-            return false;
+            return null;
         }
+    }
+
+    public MobileElement findElement(By locator) {
+        return findElement(locator, Duration.ofSeconds(mobileContext.settings.base.defaultWait));
+    }
+
+    public MobileElement findByText(String text, Duration timeout, boolean exactMatch) {
+        By locator;
+        if (exactMatch) {
+            locator = MobileBy.AndroidUIAutomator("new UiSelector().text(\"" + text + "\")");
+        } else {
+            locator = MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"" + text + "\")");
+        }
+        return findElement(locator, timeout);
+    }
+
+    public MobileElement findByText(String text, Duration timeout) {
+        return findByText(text, timeout, true);
+    }
+
+    public MobileElement findByText(String text) {
+        return findByText(text, Duration.ofSeconds(mobileContext.settings.base.defaultWait), true);
     }
 }

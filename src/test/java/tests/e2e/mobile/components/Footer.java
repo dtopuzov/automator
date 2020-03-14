@@ -1,36 +1,47 @@
 package tests.e2e.mobile.components;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
+import io.qameta.allure.Step;
 import org.openset.automator.test.mobile.MobileContext;
 import org.openset.automator.test.mobile.MobilePage;
 
+@SuppressWarnings("unused")
 public class Footer extends MobilePage {
 
-    private AppiumDriver driver;
+    public enum FooterItem {
+        HOME {
+            public String toString() {
+                return "Home";
+            }
+        },
+        WEBVIEW {
+            public String toString() {
+                return "WebView";
+            }
+        },
+        LOGIN {
+            public String toString() {
+                return "Login";
+            }
+        },
+        FORMS {
+            public String toString() {
+                return "Forms";
+            }
+        },
+        SWIPE {
+            public String toString() {
+                return "Swipe";
+            }
+        }
+    }
 
     public Footer(MobileContext context) {
         super(context);
-        this.driver = getDriver();
     }
 
-    public void navigateToHome() {
-        driver.findElement(MobileBy.AccessibilityId("Home")).click();
-    }
-
-    public void navigateToWebView() {
-        driver.findElement(MobileBy.AccessibilityId("WebView")).click();
-    }
-
-    public void navigateToLogin() {
-        driver.findElement(MobileBy.AccessibilityId("Login")).click();
-    }
-
-    public void navigateToForms() {
-        driver.findElement(MobileBy.AccessibilityId("Forms")).click();
-    }
-
-    public void navigateToSwipe() {
-        driver.findElement(MobileBy.AccessibilityId("Swipe")).click();
+    @Step("Navigate to {0}.")
+    public void navigateTo(FooterItem footerItem) {
+        getDriver().findElement(MobileBy.AccessibilityId(footerItem.toString())).click();
     }
 }
