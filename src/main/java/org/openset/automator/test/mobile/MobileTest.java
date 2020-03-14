@@ -2,30 +2,42 @@ package org.openset.automator.test.mobile;
 
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openset.automator.image.Image;
+import org.openset.automator.test.common.enums.RestartType;
 import org.openset.automator.test.common.exceptions.TakeScreenshotException;
 import org.openset.automator.test.common.extensions.Resolver;
 import org.openset.automator.test.common.extensions.Watcher;
-import org.openset.automator.test.web.WebContext;
-import org.openset.automator.test.web.WebHooks;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
  * Base org.automator.web test.
  */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith({Resolver.class, Watcher.class, MobileHooks.class})
 public class MobileTest {
     protected MobileContext context = MobileContextFactory.getInstance().getMobileContext();
 
+    @BeforeAll
+    public void beforeAll() {
+        if (context.settings.base.restartType == RestartType.ON_EACH_CLASS) {
+            context.app.restart();
+        }
+    }
+
     @BeforeEach
     public void beforeEach() {
+        if (context.settings.base.restartType == RestartType.ON_EACH_TEST) {
+            context.app.restart();
+        }
     }
 
     @AfterEach
@@ -34,6 +46,9 @@ public class MobileTest {
         boolean testFailed = extensionContext.getExecutionException().isPresent();
         if (testFailed) {
             collectArtifacts(testMethod.getName());
+            if (context.settings.base.restartType == RestartType.ON_FAILED_TEST) {
+                context.app.restart();
+            }
         }
     }
 
@@ -50,5 +65,4 @@ public class MobileTest {
 
         // Get device logs
     }
-
 }

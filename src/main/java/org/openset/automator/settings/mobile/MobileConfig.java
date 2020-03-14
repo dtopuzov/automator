@@ -1,6 +1,8 @@
 package org.openset.automator.settings.mobile;
 
 import org.openqa.selenium.Platform;
+import org.openset.automator.log.Log;
+import org.openset.automator.log.LogFactory;
 import org.openset.automator.settings.base.BaseSettings;
 import org.openset.automator.settings.electron.SettingsAppPathException;
 
@@ -15,6 +17,8 @@ import java.nio.file.StandardCopyOption;
  * Mobile specific org.automator.core.settings.
  */
 public class MobileConfig {
+    private static final Log LOGGER = LogFactory.getLogger(MobileConfig.class.getName());
+
     public Platform platform;
     public Double platformVersion;
     public String deviceName;
@@ -41,6 +45,23 @@ public class MobileConfig {
         browserType = settings.properties.getProperty("browserType");
         baseUrl = settings.properties.getProperty("baseUrl");
         chromeDriverVersion = settings.properties.getProperty("chromeDriverVersion");
+
+        logSettings();
+    }
+
+    private void logSettings() {
+        LOGGER.separator("MOBILE SETTINGS");
+        LOGGER.info("Platform: " + platform);
+        LOGGER.info("Platform Version: " + platformVersion);
+        LOGGER.info("Device Name: " + deviceName);
+        LOGGER.info("Avd Name: " + avdName);
+        LOGGER.info("Avd Args: " + avdArgs);
+        LOGGER.info("App Path: " + appPath);
+        LOGGER.info("App Package: " + appPackage);
+        LOGGER.info("App Activity: " + appActivity);
+        LOGGER.info("Browser Type: " + browserType);
+        LOGGER.info("Base Url: " + baseUrl);
+        LOGGER.info("Chrome Driver Version: " + chromeDriverVersion);
     }
 
     protected String resolveAppPath(BaseSettings settings) throws SettingsAppPathException {

@@ -10,12 +10,11 @@ import tests.e2e.mobile.pages.LoginPage;
 
 @DisplayName("Tests for Login form")
 public class LoginTests extends MobileTest {
-    private HomePage homePage = new HomePage(context);
     private LoginPage loginPage;
 
     @BeforeEach
     void beforeLoginTests() {
-        context.app.restart();
+        HomePage homePage = new HomePage(context);
         homePage.footer.navigateTo(Footer.FooterItem.LOGIN);
         loginPage = new LoginPage(context);
         loginPage.navigateToLogin();
