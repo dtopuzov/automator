@@ -27,6 +27,7 @@ public class BaseSettings {
     public String testResultsFolder;
     public String testLogsFolder;
     public String testScreenshotsFolder;
+    public String baseImagePath;
     public OSType os;
     public EnvironmentType environmentType;
     public RestartType restartType;
@@ -49,6 +50,7 @@ public class BaseSettings {
         testResultsFolder = testRunHome + File.separator + "build" + File.separator + "test-results";
         testLogsFolder = testResultsFolder + File.separator + "logs";
         testScreenshotsFolder = testResultsFolder + File.separator + "screenshots";
+        baseImagePath = getBaseImagePath();
         os = OS.getOSType();
         environmentType = getEnvironmentType();
         restartType = getRestartType();
@@ -99,6 +101,13 @@ public class BaseSettings {
         } else {
             return null;
         }
+    }
+
+    private String getBaseImagePath() {
+        String baseImagePath = properties.getProperty("baseImagePath", "");
+        String defaultValue = testRunHome + File.separator + "src" + File.separator + "test"
+                + File.separator + "resources" + File.separator + baseImagePath.replace(".", File.separator);
+        return OS.getEnvironmentVariable("BASE_IMAGE_PATH", defaultValue);
     }
 
     private RestartType getRestartType() {

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.openqa.selenium.Rectangle;
 import org.openset.automator.image.Image;
 import org.openset.automator.image.ImageComparisonResult;
 
@@ -52,25 +53,31 @@ class ImageComparisonTests {
     @Test
     @DisplayName("Compare similar images")
     void compareSimilarImages() {
-        ImageComparisonResult result = Image.compare(test, testSimilar);
+        // Compare with similarity
+        ImageComparisonResult result = Image.compare(test, testSimilar, 30);
         assertEquals(result.diffPercent, 0.0, "Image comparison failed.");
         assertEquals(result.diffPixels, 0, "Image comparison failed.");
-    }
 
-    @Test
-    @DisplayName("Compare with custom tolerance")
-    void compareSimilarImagesWithCustomTolerance() {
-        ImageComparisonResult result = Image.compare(test, testSimilar, 1);
+        // Compare without similaroty
+        result = Image.compare(test, testSimilar, 10);
         assertEquals(result.diffPercent, 89.41, "Image comparison failed.");
         assertEquals(result.diffPixels, 8941, "Image comparison failed.");
     }
 
     @Test
     @DisplayName("Compare with ignore header pixels")
-    void compareSimilarImagesIgnoreHeader() {
-        ImageComparisonResult result = Image.compare(empty, test, 30, 50);
-        assertEquals(result.diffPercent, 5.62, "Image comparison failed.");
-        assertEquals(result.diffPixels, 562, "Image comparison failed.");
+    void compareSimilarImagesWithCustomRectangle() {
+        // Compare with full-width rectangle
+        Rectangle rectangle = new Rectangle(0, 30, 50, 100);
+        ImageComparisonResult result = Image.compare(empty, test, rectangle, 0);
+        assertEquals(4.97, result.diffPercent, "Image comparison failed.");
+        assertEquals(497, result.diffPixels, "Image comparison failed.");
+
+        // Compare with half-width rectangle
+        rectangle = new Rectangle(50, 30, 50, 100);
+        result = Image.compare(empty, test, rectangle, 0);
+        assertEquals(2.36, result.diffPercent, "Image comparison failed.");
+        assertEquals(236, result.diffPixels, "Image comparison failed.");
     }
 
     private static BufferedImage getImageFile(String imageName) throws IOException {

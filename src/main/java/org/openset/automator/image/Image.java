@@ -11,6 +11,25 @@ import java.io.*;
 public class Image {
 
     /**
+     * Load image from file.
+     *
+     * @param filePath path to image file.
+     * @return image as BufferedImage.
+     */
+    public static BufferedImage fromFile(String filePath) {
+        File imageFile = new File(filePath);
+        if (imageFile.exists()) {
+            try {
+                return ImageIO.read(imageFile);
+            } catch (IOException e) {
+                throw new RuntimeException(String.format("Failed to read image from %s", filePath), e);
+            }
+        } else {
+            throw new RuntimeException(String.format("Failed to read image from %s", filePath));
+        }
+    }
+
+    /**
      * Get image of current desktop screen.
      *
      * @param rectangle area of screen to be captured.
@@ -45,7 +64,7 @@ public class Image {
      */
     public static ImageComparisonResult compare(BufferedImage actual,
                                                 BufferedImage expected) {
-        return compare(actual, expected, 30, 0);
+        return compare(actual, expected, 0);
     }
 
     /**
@@ -59,22 +78,24 @@ public class Image {
     public static ImageComparisonResult compare(BufferedImage actual,
                                                 BufferedImage expected,
                                                 int pixelSimilarity) {
-        return compare(actual, expected, pixelSimilarity, 0);
+        Rectangle bounds = actual.getData().getBounds();
+        org.openqa.selenium.Rectangle rectangle = new org.openqa.selenium.Rectangle(0, 0, bounds.height, bounds.width);
+        return compare(actual, expected, rectangle, pixelSimilarity);
     }
 
     /**
      * Compare two images.
      *
-     * @param actual             Actual image.
-     * @param expected           Expected image.
-     * @param pixelSimilarity    If sum of RGB difference in less then pixelSimilarity then two pixels will be same.
-     * @param ignoreHeaderPixels Ignore pixels from top of the images.
+     * @param actual          Actual image.
+     * @param expected        Expected image.
+     * @param comparisonArea  Rectangle to be compared (comapre full images if null).
+     * @param pixelSimilarity If sum of RGB difference in less then pixelSimilarity then two pixels will be same.
      * @return ImageComparisonResult.
      */
     public static ImageComparisonResult compare(BufferedImage actual,
                                                 BufferedImage expected,
-                                                int pixelSimilarity,
-                                                int ignoreHeaderPixels) {
+                                                org.openqa.selenium.Rectangle comparisonArea,
+                                                int pixelSimilarity) {
         long diffPixels = 0;
         double diffPercent;
 
@@ -92,8 +113,8 @@ public class Image {
             Color red = new Color(255, 0, 0);
             int redRgb = red.getRGB();
 
-            for (int y = ignoreHeaderPixels; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+            for (int y = comparisonArea.y; y < comparisonArea.getHeight(); y++) {
+                for (int x = comparisonArea.x; x < comparisonArea.getWidth(); x++) {
                     int result = pixelDiff(actual.getRGB(x, y), expected.getRGB(x, y));
                     if (result > pixelSimilarity) {
                         // Increase count in diffPixels
@@ -115,20 +136,22 @@ public class Image {
      *
      * @param image    BufferedImage object.
      * @param filePath File path as String.
-     * @throws IOException When save operation fails.
      */
-    public static void save(BufferedImage image, String filePath) throws IOException {
-        org.openset.automator.os.File.createFolder(new File(filePath).getParent());
-        ImageIO.write(image, "png", new File(filePath));
+    public static void save(BufferedImage image, String filePath) {
+        try {
+            org.openset.automator.os.File.createFolder(new File(filePath).getParent());
+            ImageIO.write(image, "png", new File(filePath));
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Failed to save image at %s", filePath));
+        }
     }
 
     /**
      * Save current screen to file.
      *
      * @param filePath File path as String.
-     * @throws IOException When save operation fails.
      */
-    public static void saveScreenshot(String filePath) throws IOException {
+    public static void saveScreenshot(String filePath) {
         save(getScreen(), filePath);
     }
 

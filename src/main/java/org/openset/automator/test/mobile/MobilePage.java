@@ -5,10 +5,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.Point;
+import io.qameta.allure.Step;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
@@ -16,11 +14,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openset.automator.app.mobile.Direction;
+import org.openset.automator.image.Image;
+import org.openset.automator.image.ImageComparisonResult;
 
 import javax.annotation.Nullable;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.time.Duration;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Base mobile abstraction.
@@ -96,13 +100,12 @@ public abstract class MobilePage {
 
     public MobileElement findElement(By locator, Duration timeout) {
         try {
-            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(0, SECONDS);
             return (MobileElement) getWait(timeout).until(ExpectedConditions.visibilityOfElementLocated(locator));
         } catch (Exception e) {
             return null;
-        }
-        finally {
-            driver.manage().timeouts().implicitlyWait(mobileContext.settings.base.defaultWait, TimeUnit.SECONDS);
+        } finally {
+            driver.manage().timeouts().implicitlyWait(mobileContext.settings.base.defaultWait, SECONDS);
         }
     }
 
@@ -173,5 +176,54 @@ public abstract class MobilePage {
 
     public void swipe(Direction direction) {
         swipe(direction, 0.8, Duration.ofMillis(1000));
+    }
+
+    public void match(String image) {
+        match(image, 0.01);
+    }
+
+    public void match(String image, double tolerance) {
+        match(image, tolerance, mobileContext.settings.base.defaultWait);
+    }
+
+    @Step("Compare current screen with '{0}' image")
+    public void match(String image, double tolerance, int timeout) {
+        String expectedImagePath = mobileContext.settings.base.baseImagePath
+                + File.separator
+                + mobileContext.settings.mobile.deviceName.toLowerCase().replace(" ", "")
+                + File.separator
+                + String.format("%s.png", image);
+
+        if (new File(expectedImagePath).exists()) {
+            ImageComparisonResult result;
+
+            boolean match = false;
+            long startTime = System.currentTimeMillis();
+            do {
+                result = compareScreen(expectedImagePath);
+                if (result.diffPercent <= tolerance) {
+                    match = true;
+                }
+            } while (!match && System.currentTimeMillis() - startTime < timeout * 1000);
+
+            // Save actual and diff image
+            if (result.diffPercent > tolerance) {
+                Image.save(result.actualImage, expectedImagePath.replace(".png", "_actual.png"));
+                Image.save(result.diffImage, expectedImagePath.replace(".png", "_diff.png"));
+            }
+
+            // Verify result
+            assertTrue(result.diffPercent <= tolerance, String.format("Current screen does not match '%s' image.", image));
+        } else {
+            BufferedImage actualImage = mobileContext.app.getScreenshot();
+            Image.save(actualImage, expectedImagePath);
+        }
+    }
+
+    private ImageComparisonResult compareScreen(String expectedImagePath) {
+        BufferedImage actualImage = mobileContext.app.getScreenshot();
+        Rectangle viewPort = mobileContext.app.getViewPortRectangle();
+        BufferedImage expectedImage = Image.fromFile(expectedImagePath);
+        return Image.compare(actualImage, expectedImage, viewPort, 10);
     }
 }

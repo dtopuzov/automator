@@ -20,11 +20,6 @@ public class SikuliConfig {
     public SikuliConfig(BaseSettings settings) {
         Properties properties = settings.properties;
         this.defaultSimilarity = Float.valueOf(properties.getProperty("defaultSimilarity", "0.9D"));
-        this.baseImagePath = getBaseImagePath(settings);
-    }
-
-    private String getBaseImagePath(BaseSettings settings) {
-        String baseImagePath = settings.properties.getProperty("baseImagePath", "");
-        return settings.testRunHome + "/src/test/resources/" + baseImagePath.replace(".", File.separator);
+        this.baseImagePath = settings.baseImagePath;
     }
 }

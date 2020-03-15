@@ -10,10 +10,8 @@ import org.openset.automator.app.desktop.DesktopApp;
 import org.openset.automator.image.Image;
 import org.openset.automator.settings.desktop.DesktopSettings;
 import org.openset.automator.test.common.extensions.Resolver;
-import org.openset.automator.test.common.exceptions.TakeScreenshotException;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 
 @ExtendWith(Resolver.class)
@@ -54,14 +52,7 @@ public abstract class DesktopTest {
     }
 
     private void collectArtifacts(String testName) {
-        // Get screenshot
-        try {
-            String basePath = context.getSettings().base.testScreenshotsFolder;
-            Image.saveScreenshot(basePath + File.separator + testName + ".png");
-        } catch (IOException e) {
-            throw new TakeScreenshotException("Failed to take screenshot of host OS.", e);
-        }
-
-        // Get logs
+        String basePath = context.getSettings().base.testScreenshotsFolder;
+        Image.saveScreenshot(basePath + File.separator + testName + ".png");
     }
 }
