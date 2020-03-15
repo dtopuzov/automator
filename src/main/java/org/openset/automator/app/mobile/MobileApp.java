@@ -1,6 +1,7 @@
 package org.openset.automator.app.mobile;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openset.automator.app.App;
@@ -51,6 +52,10 @@ public class MobileApp implements App {
 
     public void restart() {
         driver.resetApp();
+    }
+
+    public Dimension getWindowSize() {
+        return getDriver().manage().window().getSize();
     }
 
     /**
