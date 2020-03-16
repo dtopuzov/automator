@@ -22,7 +22,7 @@ allure {
     version = '2.7.0'
     downloadLink = 'https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/2.7.0/allure-2.7.0.zip'
     useJUnit5 {
-        version = '2.13.1'
+        version = '2.13.2'
     }
 }
 
@@ -39,7 +39,7 @@ dependencies {
     implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.8.1'
     implementation group: 'org.awaitility', name: 'awaitility', version: '4.0.2'
     implementation group: 'com.sikulix', name: 'sikulixapi', version: '2.0.3'
-    implementation 'io.qameta.allure:allure-junit5:2.13.1'
+    implementation 'io.qameta.allure:allure-junit5:2.13.2'
     implementation('org.aspectj:aspectjweaver') {
         version {
             strictly '1.9.5'
