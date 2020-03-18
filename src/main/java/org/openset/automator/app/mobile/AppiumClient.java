@@ -98,6 +98,9 @@ public class AppiumClient {
         // Set iOS specific settings.
         if (settings.mobile.platform == Platform.IOS) {
             capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
+            if (settings.mobile.includeSafariInWebViews) {
+                capabilities.setCapability("includeSafariInWebviews", true);
+            }
         }
 
         // Set device id.

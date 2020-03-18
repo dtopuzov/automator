@@ -31,6 +31,7 @@ public class MobileConfig {
     public String browserType;
     public String baseUrl;
     public String chromeDriverVersion;
+    public boolean includeSafariInWebViews;
 
     public MobileConfig(BaseSettings settings) {
         platform = Platform.fromString(settings.properties.getProperty("platform"));
@@ -45,6 +46,7 @@ public class MobileConfig {
         browserType = settings.properties.getProperty("browserType");
         baseUrl = settings.properties.getProperty("baseUrl");
         chromeDriverVersion = settings.properties.getProperty("chromeDriverVersion");
+        includeSafariInWebViews = settings.propertyToBoolean("includeSafariInWebviews", false);
 
         logSettings();
     }

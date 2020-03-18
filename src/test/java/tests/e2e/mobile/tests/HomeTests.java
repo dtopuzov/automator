@@ -24,6 +24,7 @@ public class HomeTests extends MobileTest {
     @DisplayName("Home page smoke test")
     void homePageTest() {
         // Verify initial state
+        assertNotNull(homePage.findByText("WEBDRIVER"), "Failed to load home page.");
         homePage.match("webdriverio_home");
 
         // Scroll down to find "Support" text (on some low resolution devices 'Support' is hidden until scroll).

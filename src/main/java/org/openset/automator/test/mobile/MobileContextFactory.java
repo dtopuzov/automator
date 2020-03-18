@@ -1,10 +1,7 @@
 package org.openset.automator.test.mobile;
 
 import org.openset.automator.app.mobile.MobileApp;
-import org.openset.automator.app.web.Browser;
 import org.openset.automator.settings.mobile.MobileSettings;
-import org.openset.automator.settings.web.WebSettings;
-import org.openset.automator.test.web.WebContext;
 
 public class MobileContextFactory {
 

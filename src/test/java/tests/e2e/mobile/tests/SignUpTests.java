@@ -24,7 +24,7 @@ public class SignUpTests extends MobileTest {
     @DisplayName("SignUp with valid account")
     void signUpWithValidAccount() {
         loginPage.signUp("dtopuzov@gmail.com", "fakePassword", "fakePassword");
-        loginPage.verifySuccessfullSignUp();
+        loginPage.verifySuccessfulSignUp();
     }
 
     @Test

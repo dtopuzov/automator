@@ -58,7 +58,8 @@ public class MobileTest {
             String basePath = context.settings.base.testScreenshotsFolder;
             BufferedImage image = context.app.getScreenshot();
             Image.save(image, basePath + File.separator + testName + ".png");
-            Allure.addAttachment("Screenshot on test fail", "image/png", Image.bufferedImageToInputStream(image), ".png");
+            Allure.addAttachment("Screenshot on test fail", "image/png",
+                    Image.bufferedImageToInputStream(image), ".png");
         } catch (IOException e) {
             throw new TakeScreenshotException("Failed to take screenshot of mobile app.", e);
         }

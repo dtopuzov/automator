@@ -10,9 +10,9 @@ import org.openset.automator.test.common.exceptions.TakeScreenshotException;
 import org.openset.automator.test.common.extensions.Resolver;
 import org.openset.automator.test.common.extensions.Watcher;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
@@ -41,7 +41,8 @@ public class WebTest {
             String basePath = context.settings.base.testScreenshotsFolder;
             BufferedImage image = context.browser.getScreenshot();
             Image.save(image, basePath + File.separator + testName + ".png");
-            Allure.addAttachment("Screenshot on test fail", "image/png", Image.bufferedImageToInputStream(image), ".png");
+            Allure.addAttachment("Screenshot on test fail", "image/png",
+                    Image.bufferedImageToInputStream(image), ".png");
         } catch (IOException e) {
             throw new TakeScreenshotException("Failed to take screenshot of current browser.", e);
         }

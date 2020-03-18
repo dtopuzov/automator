@@ -24,6 +24,7 @@ import java.time.Duration;
 import java.util.Set;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -76,6 +77,10 @@ public abstract class MobilePage {
 
     @Nullable
     private String getWebContext(AppiumDriver<?> driver) {
+        await()
+                .atMost(mobileContext.settings.base.defaultWait, SECONDS)
+                .until(() -> driver.getContextHandles().size() > 1);
+
         Set<String> handles = driver.getContextHandles();
         for (Object context : handles) {
             if (!String.valueOf(context).equals("NATIVE_APP")) {
@@ -115,10 +120,22 @@ public abstract class MobilePage {
 
     public MobileElement findByText(String text, Duration timeout, boolean exactMatch) {
         By locator;
-        if (exactMatch) {
-            locator = MobileBy.AndroidUIAutomator("new UiSelector().text(\"" + text + "\")");
+        if (mobileContext.settings.mobile.platform == Platform.ANDROID) {
+            if (exactMatch) {
+                locator = MobileBy.AndroidUIAutomator("new UiSelector().text(\"" + text + "\")");
+            } else {
+                locator = MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"" + text + "\")");
+            }
+        } else if (mobileContext.settings.mobile.platform == Platform.IOS) {
+            if (exactMatch) {
+                String exactPredicate = "name == \"" + text + "\" OR label == \"" + text + "\"";
+                locator = MobileBy.iOSNsPredicateString(exactPredicate);
+            } else {
+                String containsPredicate = "name contains '" + text + "' OR label contains '" + text + "'";
+                locator = MobileBy.iOSNsPredicateString(containsPredicate);
+            }
         } else {
-            locator = MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"" + text + "\")");
+            throw new RuntimeException("Unsupported mobile platform: " + mobileContext.settings.mobile.platform);
         }
         return findElement(locator, timeout);
     }
@@ -178,6 +195,11 @@ public abstract class MobilePage {
         swipe(direction, 0.8, Duration.ofMillis(1000));
     }
 
+    @Step("Hide keyboard")
+    public void hideKeyboard() {
+        driver.hideKeyboard();
+    }
+
     public void match(String image) {
         match(image, 0.01);
     }
@@ -188,11 +210,13 @@ public abstract class MobilePage {
 
     @Step("Compare current screen with '{0}' image")
     public void match(String image, double tolerance, int timeout) {
-        String expectedImagePath = mobileContext.settings.base.baseImagePath
-                + File.separator
-                + mobileContext.settings.mobile.deviceName.toLowerCase().replace(" ", "")
-                + File.separator
-                + String.format("%s.png", image);
+        String deviceString = mobileContext.settings.mobile.deviceName.toLowerCase().replace(" ", "");
+        if (mobileContext.settings.mobile.platform == Platform.IOS) {
+            deviceString = deviceString + "_ios" + mobileContext.settings.mobile.platformVersion.intValue();
+        }
+
+        String expectedImagePath = mobileContext.settings.base.baseImagePath + File.separator + deviceString
+                + File.separator + String.format("%s.png", image);
 
         if (new File(expectedImagePath).exists()) {
             ImageComparisonResult result;
@@ -213,7 +237,8 @@ public abstract class MobilePage {
             }
 
             // Verify result
-            assertTrue(result.diffPercent <= tolerance, String.format("Current screen does not match '%s' image.", image));
+            assertTrue(result.diffPercent <= tolerance,
+                    String.format("Current screen does not match '%s' image.", image));
         } else {
             BufferedImage actualImage = mobileContext.app.getScreenshot();
             Image.save(actualImage, expectedImagePath);
@@ -224,6 +249,15 @@ public abstract class MobilePage {
         BufferedImage actualImage = mobileContext.app.getScreenshot();
         Rectangle viewPort = mobileContext.app.getViewPortRectangle();
         BufferedImage expectedImage = Image.fromFile(expectedImagePath);
+
+        // On new iOS devices (iPhone 11, iPhone X*) viewport rectangle is way smaller than actual size
+        if (actualImage.getWidth() > viewPort.getWidth()) {
+            viewPort.setWidth(actualImage.getWidth());
+        }
+        if (actualImage.getHeight() > viewPort.getHeight()) {
+            viewPort.setHeight(actualImage.getHeight());
+        }
+
         return Image.compare(actualImage, expectedImage, viewPort, 10);
     }
 }

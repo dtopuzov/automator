@@ -31,7 +31,7 @@ public class AppiumServer {
         // Construct AppiumServiceBuilder
         AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder()
                 .usingAnyFreePort()
-                .withArgument(GeneralServerFlag.LOG_LEVEL, "warn");
+                .withArgument(GeneralServerFlag.LOG_LEVEL, "error");
 
         // Allow RELAXED_SECURITY for local execution
         serviceBuilder.withArgument(GeneralServerFlag.RELAXED_SECURITY);

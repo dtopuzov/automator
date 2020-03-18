@@ -2,7 +2,6 @@ package org.openset.automator.settings.sikuli;
 
 import org.openset.automator.settings.base.BaseSettings;
 
-import java.io.File;
 import java.util.Properties;
 
 /**

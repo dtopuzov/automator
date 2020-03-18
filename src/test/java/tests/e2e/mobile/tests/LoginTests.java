@@ -24,7 +24,7 @@ public class LoginTests extends MobileTest {
     @DisplayName("Login with valid account")
     void loginWithValidAccount() {
         loginPage.login("dtopuzov@gmail.com", "password");
-        loginPage.verifySuccessfullLogin();
+        loginPage.verifySuccessfulLogin();
     }
 
     @Test
