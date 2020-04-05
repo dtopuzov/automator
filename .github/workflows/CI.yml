@@ -12,6 +12,9 @@ on:
 jobs:
   tests-ubuntu:
     runs-on: ubuntu-latest
+    env:
+      MOZ_HEADLESS_WIDTH: 1920
+      MOZ_HEADLESS_HEIGHT: 1080
     steps:
     - uses: actions/checkout@master
       with:
@@ -23,7 +26,7 @@ jobs:
     - name: Unit Tests
       run: ./gradlew clean checkstyleMain checkstyleTest test --tests "tests.unit.*"
     - name: Web Tests
-      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig=github -Dcores=2
+      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig="github.local.firefox" -Dcores=2
   tests-windows:
     runs-on: windows-latest
     steps:
@@ -37,7 +40,7 @@ jobs:
     - name: Unit Tests
       run: ./gradlew clean checkstyleMain checkstyleTest test --tests "tests.unit.*"
     - name: Web Tests
-      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig=github -Dcores=2
+      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig="github.local.chrome" -Dcores=2
     - name: Desktop Tests
       run: ./gradlew clean test --tests "tests.e2e.desktop.*" -Dconfig="morse.windows"
   tests-macos:
@@ -55,4 +58,4 @@ jobs:
     - name: Unit Tests
       run: ./gradlew clean checkstyleMain checkstyleTest test --tests "tests.unit.*"
     - name: Web Tests
-      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig=github -Dcores=2
+      run: ./gradlew clean test --tests "tests.e2e.web.*" -Dconfig="github.local.chrome" -Dcores=2

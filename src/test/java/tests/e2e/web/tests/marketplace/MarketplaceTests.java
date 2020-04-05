@@ -11,6 +11,8 @@ import tests.e2e.web.pages.marketplace.MarketplaceSearchPage;
 
 import java.util.List;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Marketplace tests")
@@ -64,18 +66,22 @@ public class MarketplaceTests extends WebTest {
         @DisplayName("Search for apps")
         void searchForApps() {
             MarketplaceSearchPage resultsPage = new MarketplaceSearchPage(context, "marketplace?type=apps");
-            int resultsCount = resultsPage.searchFor("Azure Pipelines").getResults().size();
-            assertEquals(1, resultsCount, "Search for 'Azure Pipelines' should return only one result");
+            resultsPage.searchFor("Azure Pipelines");
+            await()
+                    .atMost(10, SECONDS)
+                    .untilAsserted(() -> assertEquals(1, resultsPage.getResults().size(),
+                            "Search for 'Azure Pipelines' should return only one result"));
         }
 
         @Test
         @DisplayName("Search for actions")
         void searchForActions() {
             MarketplaceSearchPage resultsPage = new MarketplaceSearchPage(context, "marketplace?type=actions");
-            int resultsCount = resultsPage.searchFor("jdk").getResults().size();
-            assertAll(() -> assertTrue(resultsCount > 1, "Search for 'jdk should return more results'"),
-                    () -> assertTrue(resultsCount < 10, "Search for 'jdk should return less results'")
-            );
+            resultsPage.searchFor("jdk");
+            await()
+                    .atMost(10, SECONDS)
+                    .untilAsserted(() -> assertTrue(resultsPage.getResults().size() > 1,
+                            "Failed to find results for 'jdk' actions."));
         }
     }
 }

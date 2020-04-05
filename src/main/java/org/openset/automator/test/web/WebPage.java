@@ -10,6 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Base org.automator.web page abstraction.
  */
@@ -73,6 +77,18 @@ public abstract class WebPage {
      */
     public String getUrl() {
         return driver.getCurrentUrl();
+    }
+
+    /**
+     * Wait until URL contains string.
+     *
+     * @param url partial url.
+     */
+    public void waitForUrl(String url) {
+        await()
+                .atMost(10, SECONDS)
+                .untilAsserted(() -> assertTrue(getUrl().contains(url),
+                        "Current url does not contain '%s'.\n Actual url: " + getUrl()));
     }
 
     /**

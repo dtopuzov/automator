@@ -81,10 +81,7 @@ class TopNavigationTests extends WebTest {
     @DisplayName("Search leads to search results page")
     void searchLeadsToSearchResultsPage() {
         header.searchFor("Appium");
-        String actualUrl = context.browser.getUrl();
-        assertAll(() -> assertTrue(actualUrl.contains(context.settings.web.baseUrl + "search?")),
-                () -> assertTrue(actualUrl.contains("q=Appium"))
-        );
+        homePage.waitForUrl("search?q=Appium");
     }
 
     @Test

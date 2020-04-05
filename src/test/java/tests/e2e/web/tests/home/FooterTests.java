@@ -46,13 +46,13 @@ class FooterTests extends WebTest {
         @Test
         @DisplayName("Link to terms of service exists in footer signup form")
         void linkToTermsOfServiceExistsInFooterSignUpForm() {
-            assertEquals("https://help.github.com/terms", signUpForm.getLinkByText("Terms of Service"));
+            assertEquals("https://help.github.com/terms", signUpForm.getLinkByText("terms of service"));
         }
 
         @Test
         @DisplayName("Link to privacy statment exists in footer signup form")
         void linkToPrivacyStatementExistsInFooterSignUpForm() {
-            assertEquals("https://help.github.com/privacy", signUpForm.getLinkByText("Privacy Statement"));
+            assertEquals("https://help.github.com/privacy", signUpForm.getLinkByText("privacy statement"));
         }
     }
 

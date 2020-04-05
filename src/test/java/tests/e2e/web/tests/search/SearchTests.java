@@ -1,13 +1,13 @@
 package tests.e2e.web.tests.search;
 
-import tests.e2e.web.pages.search.AdvancedSearchPage;
-import tests.e2e.web.pages.search.SearchResultsPage;
-import tests.e2e.web.pages.search.SimpleSearchPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.openset.automator.test.web.WebTest;
+import tests.e2e.web.pages.search.AdvancedSearchPage;
+import tests.e2e.web.pages.search.SearchResultsPage;
+import tests.e2e.web.pages.search.SimpleSearchPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,9 +28,7 @@ public class SearchTests extends WebTest {
         @Test
         void searchInSimpleSearchForm() {
             SearchResultsPage searchResultsPage = searchPage.searchFor("Appium");
-            String url = searchResultsPage.getUrl();
-            assertTrue(url.contains("q=Appium&ref=simplesearch"),
-                    "Search in simple search form do not lead to correct URL. \nCurrent URL: " + url);
+            searchResultsPage.waitForUrl("q=Appium&ref=simplesearch");
         }
 
         @Test
@@ -61,9 +59,8 @@ public class SearchTests extends WebTest {
         @Test
         void searchInAdvancedSearchForm() {
             SearchResultsPage searchResultsPage = searchPage.searchFor("Appium");
-            String url = searchResultsPage.getUrl();
-            assertTrue(url.contains("q=Appium&type=Repositories&ref=advsearch"),
-                    "Search in advanced search form do not lead to correct URL. \nCurrent URL: " + url);
+            searchResultsPage.waitForUrl("q=Appium&type=Repositories&ref=advsearch");
+            assertTrue(searchResultsPage.getResults().size() >= 10, "Search does not return results.");
         }
 
         @Test
@@ -72,10 +69,9 @@ public class SearchTests extends WebTest {
             String searchOptions = "automator user:dtopuzov language:Java license:apache-2.0";
             SearchResultsPage searchResultsPage = searchPage.searchFor(searchOptions);
 
-            // Verify Url
-            String url = searchResultsPage.getUrl();
-            String params = "q=automator+user%3Adtopuzov+language%3AJava+license%3Aapache-2.0&type=Repositories";
-            assertTrue(url.contains(params), "Search do not lead to correct URL. \nCurrent URL: " + url);
+            // Verify url
+            String urlParams = "q=automator+user%3Adtopuzov+language%3AJava+license%3Aapache-2.0&type=Repositories";
+            searchResultsPage.waitForUrl(urlParams);
 
             // Verify only one result is found
             assertEquals(1, searchResultsPage.getResults().size(), "Wrong number of results.");

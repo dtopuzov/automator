@@ -90,7 +90,7 @@ class SettingsTests {
     class WebSettingsTests {
         @Test
         void testWebSettingsWithConfigFile() {
-            System.setProperty("config", "github");
+            System.setProperty("config", "github.local.chrome");
             WebSettings settings = new WebSettings();
             assertEquals(BrowserType.CHROME, settings.web.browserType);
             assertEquals(new Dimension(1280, 1024), settings.web.browserSize);

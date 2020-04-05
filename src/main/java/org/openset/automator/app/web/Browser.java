@@ -1,40 +1,31 @@
 package org.openset.automator.app.web;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openset.automator.app.App;
-import org.openset.automator.app.StartApplicationException;
 import org.openset.automator.log.Log;
 import org.openset.automator.log.LogFactory;
 import org.openset.automator.os.OSType;
-import org.openset.automator.settings.base.EnvironmentType;
 import org.openset.automator.settings.web.WebSettings;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings("unused")
 public class Browser implements App {
     private static final Log LOGGER = LogFactory.getLogger(Browser.class.getName());
     private WebSettings settings;
+    private DriverManager driverManager;
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -45,17 +36,8 @@ public class Browser implements App {
      */
     public Browser(WebSettings settings) {
         this.settings = settings;
-        switch (settings.web.browserType) {
-            case BrowserType.CHROME:
-                WebDriverManager.chromedriver().setup();
-                break;
-            case BrowserType.FIREFOX:
-                WebDriverManager.firefoxdriver().setup();
-                break;
-            default:
-                String message = String.format("Unsupported browser type: %s", settings.web.browserType);
-                throw new StartApplicationException(message);
-        }
+        this.driverManager = new DriverManager(settings);
+        driverManager.setupDriver();
     }
 
     /**
@@ -65,80 +47,18 @@ public class Browser implements App {
      */
     @Step("Start browser")
     public Browser start() {
-        System.out.println("Start browser");
-        if (settings.base.environmentType == EnvironmentType.LOCAL) {
-            startLocal();
-        } else if (settings.base.environmentType == EnvironmentType.SAUCELABS) {
-            startSauce();
-        }
-        wait = new WebDriverWait(driver, settings.base.defaultWait);
-        return this;
-    }
+        LOGGER.info("Start browser");
+        driver = driverManager.getDriver();
 
-    /**
-     * Start browser instance on SauceLabs.
-     */
-    private void startSauce() {
-        if ((settings.sauce.userName != null) && (settings.sauce.accessKey != null)) {
-            String url = "http://" + settings.sauce.userName + ":" + settings.sauce.accessKey + "@ondemand.saucelabs.com:80/wd/hub";
-
-            ChromeOptions browserOptions = new ChromeOptions();
-            browserOptions.setExperimentalOption("w3c", true);
-            browserOptions.setCapability("platformName", settings.sauce.platformName);
-            if (settings.sauce.browserVersion != null) {
-                browserOptions.setCapability("browserVersion", settings.sauce.browserVersion);
-            }
-
-            try {
-                driver = new RemoteWebDriver(new URL(url), browserOptions);
-            } catch (MalformedURLException e) {
-                throw new StartApplicationException("Malformed URL exception.", e);
-            }
-
-            if (settings.base.defaultWait != null) {
-                driver.manage().timeouts().implicitlyWait(settings.base.defaultWait, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(settings.base.defaultWait, TimeUnit.SECONDS);
-            }
-            LOGGER.info("SauceLabs session started!");
-        } else {
-            String error = "Can not start SauceLabs session without user and password.";
-            LOGGER.fatal(error);
-            throw new StartApplicationException(error);
-        }
-    }
-
-    /**
-     * Start local browser instance.
-     */
-    private void startLocal() {
-        switch (settings.web.browserType) {
-            case BrowserType.CHROME:
-                ChromeOptions options = new ChromeOptions();
-                HashMap<String, String> prefs = new HashMap<>();
-                prefs.put("intl.accept_languages", "en-US");
-                options.setExperimentalOption("prefs", prefs);
-                if (settings.web.headless) {
-                    options.addArguments("headless");
-                }
-                if (settings.web.browserSize != null) {
-                    options.addArguments(String.format("--window-size=%s,%s",
-                            settings.web.browserSize.getWidth(),
-                            settings.web.browserSize.getHeight()));
-                }
-                driver = new ChromeDriver(options);
-                break;
-            case BrowserType.FIREFOX:
-                driver = new FirefoxDriver();
-                break;
-            default:
-                String message = String.format("Unsupported browser type: %s", settings.web.browserType);
-                throw new StartApplicationException(message);
-        }
+        // Set waits
         if (settings.base.defaultWait != null) {
             driver.manage().timeouts().implicitlyWait(settings.base.defaultWait, TimeUnit.SECONDS);
             driver.manage().timeouts().pageLoadTimeout(settings.base.defaultWait, TimeUnit.SECONDS);
         }
         LOGGER.info(String.format("%s browser started.", settings.web.browserType));
+
+        wait = new WebDriverWait(driver, settings.base.defaultWait);
+        return this;
     }
 
     /**

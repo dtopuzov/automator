@@ -15,7 +15,7 @@ public class WebConfig {
      */
     public WebConfig(BaseSettings settings) {
         this.headless = settings.propertyToBoolean("headless", false);
-        this.browserType = settings.properties.getProperty("browserType", BrowserType.CHROME).toLowerCase();
+        this.browserType = settings.properties.getProperty("browserType", BrowserType.CHROME);
         this.baseUrl = settings.properties.getProperty("baseUrl", null);
         this.browserSize = getDimension(settings);
     }
