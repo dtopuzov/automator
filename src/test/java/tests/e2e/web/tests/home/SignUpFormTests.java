@@ -1,12 +1,12 @@
 package tests.e2e.web.tests.home;
 
-import tests.e2e.web.components.SignUpForm;
-import tests.e2e.web.pages.HomePage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openset.automator.test.web.WebTest;
+import tests.e2e.web.components.SignUpForm;
+import tests.e2e.web.pages.HomePage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
