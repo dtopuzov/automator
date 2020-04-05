@@ -140,7 +140,7 @@ public class Browser implements App {
 
     @Step("Navigate to {0}")
     public Browser navigateTo(String url) {
-        return navigateTo(url, false);
+        return navigateTo(url, true);
     }
 
     /**
