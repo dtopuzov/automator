@@ -5,13 +5,26 @@ import org.openset.automator.settings.SettingsLoadException;
 import org.openset.automator.settings.base.EnvironmentType;
 import org.openset.automator.settings.web.WebSettings;
 
+/**
+ * Capabilities for web testing.
+ */
 public class Capabilities {
     private WebSettings settings;
 
+    /**
+     * Init.
+     *
+     * @param settings instance of WebSettings.
+     */
     public Capabilities(WebSettings settings) {
         this.settings = settings;
     }
 
+    /**
+     * Get capabilites for web testing.
+     *
+     * @return MutableCapabilities.
+     */
     public MutableCapabilities getCapabilities() {
         MutableCapabilities capabilities;
         if (settings.base.environmentType == EnvironmentType.LOCAL) {

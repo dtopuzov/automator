@@ -90,6 +90,9 @@ public abstract class MobilePage {
         return null;
     }
 
+    /**
+     * Switch to WebContext to control WebViews.
+     */
     public void switchToWebContext() {
         String webContext = this.getWebContext(driver);
         if (webContext != null) {
@@ -99,10 +102,20 @@ public abstract class MobilePage {
         }
     }
 
+    /**
+     * Switch to context of native mobile app.
+     */
     public void switchToNativeContext() {
         driver.context("NATIVE_APP");
     }
 
+    /**
+     * Find element by locator.
+     *
+     * @param locator By locator.
+     * @param timeout to wait for element.
+     * @return MobileElement.
+     */
     public MobileElement findElement(By locator, Duration timeout) {
         try {
             driver.manage().timeouts().implicitlyWait(0, SECONDS);
@@ -114,10 +127,24 @@ public abstract class MobilePage {
         }
     }
 
+    /**
+     * Find element by locator.
+     *
+     * @param locator By locator.
+     * @return MobileElement.
+     */
     public MobileElement findElement(By locator) {
         return findElement(locator, Duration.ofSeconds(mobileContext.settings.base.defaultWait));
     }
 
+    /**
+     * Find element by text.
+     *
+     * @param text       of element.
+     * @param timeout    to wait for element.
+     * @param exactMatch if true it will return only element with exact match of text.
+     * @return MobileElement.
+     */
     public MobileElement findByText(String text, Duration timeout, boolean exactMatch) {
         By locator;
         if (mobileContext.settings.mobile.platform == Platform.ANDROID) {
@@ -148,6 +175,14 @@ public abstract class MobilePage {
         return findByText(text, Duration.ofSeconds(mobileContext.settings.base.defaultWait), true);
     }
 
+
+    /**
+     * Swipe from start poit to end point.
+     *
+     * @param start    point.
+     * @param end      point.
+     * @param duration of swipe action.
+     */
     public void swipe(Point start, Point end, Duration duration) {
         // Resources: https://appiumpro.com/editions/107
         PointerInput input = new PointerInput(PointerInput.Kind.TOUCH, "finger1");
@@ -165,6 +200,13 @@ public abstract class MobilePage {
         driver.perform(ImmutableList.of(swipe));
     }
 
+    /**
+     * Swipe.
+     *
+     * @param direction Direction enum value.
+     * @param distance  as percent of view port (for example 0.8 is swipe in 80% of view port).
+     * @param duration  of swipe action.
+     */
     public void swipe(Direction direction, double distance, Duration duration) {
         if (distance < 0 || distance > 1) {
             throw new RuntimeException("Scroll distance must be between 0 and 1.");

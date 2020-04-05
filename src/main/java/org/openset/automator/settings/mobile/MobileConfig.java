@@ -33,6 +33,11 @@ public class MobileConfig {
     public String chromeDriverVersion;
     public boolean includeSafariInWebViews;
 
+    /**
+     * Init mobile settings.
+     *
+     * @param settings instance of BaseSettings.
+     */
     public MobileConfig(BaseSettings settings) {
         platform = Platform.fromString(settings.properties.getProperty("platform"));
         platformVersion = Double.parseDouble(settings.properties.getProperty("platformVersion"));

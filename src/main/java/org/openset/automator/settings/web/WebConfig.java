@@ -11,7 +11,7 @@ public class WebConfig {
     public Dimension browserSize;
 
     /**
-     * Init default org.automator.web org.automator.core.settings.
+     * Init default web settings.
      */
     public WebConfig(BaseSettings settings) {
         this.headless = settings.propertyToBoolean("headless", false);

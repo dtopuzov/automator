@@ -8,7 +8,16 @@ import org.openset.automator.settings.web.WebSettings;
 import java.util.HashMap;
 import java.util.Properties;
 
+/**
+ * BrowserStack capabilities.
+ */
 public class BrowserStackCapabilities {
+    /**
+     * Get capabilities for BrowserStack session.
+     *
+     * @param settings instance of WebSettings.
+     * @return MutableCapabilities.
+     */
     public static MutableCapabilities getCapabilities(WebSettings settings) {
         MutableCapabilities capabilities = new MutableCapabilities();
         Properties properties = settings.browserStack.getBrowserStackProperties();

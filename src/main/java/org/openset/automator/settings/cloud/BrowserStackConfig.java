@@ -23,6 +23,11 @@ public class BrowserStackConfig {
         this.properties = settings.properties;
     }
 
+    /**
+     * Get URL for BrowserStack session.
+     *
+     * @return URL.
+     */
     public URL getUrl() {
         String defaultUser = OS.getEnvironmentVariable("BROWSER_STACK_USER", null);
         String defaultKey = OS.getEnvironmentVariable("BROWSER_STACK_KEY", null);
@@ -41,6 +46,11 @@ public class BrowserStackConfig {
         }
     }
 
+    /**
+     * Get BrowserStack specific properties.
+     *
+     * @return Properties.
+     */
     public Properties getBrowserStackProperties() {
         Properties browserStackProperties = properties;
         properties.forEach((key, val) -> {

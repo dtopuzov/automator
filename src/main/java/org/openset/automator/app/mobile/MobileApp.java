@@ -1,7 +1,10 @@
 package org.openset.automator.app.mobile;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Rectangle;
+import org.openqa.selenium.TakesScreenshot;
 import org.openset.automator.app.App;
 import org.openset.automator.appium.AppiumServer;
 import org.openset.automator.settings.mobile.MobileSettings;
@@ -12,12 +15,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * MobileApp abstraction.
+ */
 public class MobileApp implements App {
     private AppiumServer server;
     private AppiumClient client;
     private AppiumDriver<?> driver;
     private MobileSettings settings;
 
+    /**
+     * Init mobile app.
+     *
+     * @param settings instance of MobileSettings.
+     */
     public MobileApp(MobileSettings settings) {
         this.settings = settings;
         server = new AppiumServer();
@@ -32,6 +43,9 @@ public class MobileApp implements App {
         return driver;
     }
 
+    /**
+     * Start appium session (and mobile app).
+     */
     public void start() {
         server.start();
         client = new AppiumClient(server.getUrl(), settings);
@@ -39,6 +53,9 @@ public class MobileApp implements App {
         driver = client.getDriver();
     }
 
+    /**
+     * Stop appium session (and mobile app).
+     */
     public void stop() {
         if (client != null) {
             client.stop();
@@ -49,6 +66,9 @@ public class MobileApp implements App {
         }
     }
 
+    /**
+     * Restart mobile app.
+     */
     public void restart() {
         driver.resetApp();
     }
@@ -57,6 +77,11 @@ public class MobileApp implements App {
         return getDriver().manage().window().getSize();
     }
 
+    /**
+     * Get view port rectangle (the area of app without status bars).
+     *
+     * @return Rectangle.
+     */
     @SuppressWarnings("unchecked")
     public Rectangle getViewPortRectangle() {
         Map<String, Object> caps = driver.getSessionDetails();

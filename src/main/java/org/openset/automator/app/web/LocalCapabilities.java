@@ -11,7 +11,16 @@ import org.openset.automator.settings.web.WebConfig;
 
 import java.util.HashMap;
 
+/**
+ * Local capabilities for web testing.
+ */
 public class LocalCapabilities {
+    /**
+     * Get capabilities for local web testing.
+     *
+     * @param webConfig instance of WebConfig.
+     * @return MutableCapabilities.
+     */
     public static MutableCapabilities getCapabilities(WebConfig webConfig) {
         MutableCapabilities capabilities;
         switch (webConfig.browserType) {
@@ -34,6 +43,12 @@ public class LocalCapabilities {
         return capabilities;
     }
 
+    /**
+     * Get ChromeOptions based on WebConfig settings.
+     *
+     * @param webConfig instance of WebConfig.
+     * @return ChromeOptions.
+     */
     public static ChromeOptions getChromeOptions(WebConfig webConfig) {
         ChromeOptions options = new ChromeOptions();
         HashMap<String, String> prefs = new HashMap<>();
@@ -50,6 +65,12 @@ public class LocalCapabilities {
         return options;
     }
 
+    /**
+     * Get FirefoxOptions based on WebConfig settings.
+     *
+     * @param webConfig instance of WebConfig.
+     * @return FirefoxOptions.
+     */
     public static FirefoxOptions getFirefoxOptions(WebConfig webConfig) {
         FirefoxOptions options = new FirefoxOptions();
         options.setAcceptInsecureCerts(true);

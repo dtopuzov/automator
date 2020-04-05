@@ -18,16 +18,28 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Appium Client.
+ */
 public class AppiumClient {
     private MobileSettings settings;
     private URL serverUrl;
     private AppiumDriver<?> driver;
 
+    /**
+     * Init Appium Client.
+     *
+     * @param serverUrl Appium Server url.
+     * @param settings  MobileSettings.
+     */
     public AppiumClient(URL serverUrl, MobileSettings settings) {
         this.serverUrl = serverUrl;
         this.settings = settings;
     }
 
+    /**
+     * Start Appium Client.
+     */
     public void start() {
         if (settings.mobile.platform == Platform.IOS) {
             driver = new IOSDriver<IOSElement>(serverUrl, getCapabilities());
@@ -39,6 +51,9 @@ public class AppiumClient {
         driver.manage().timeouts().implicitlyWait(settings.base.defaultWait, TimeUnit.SECONDS);
     }
 
+    /**
+     * Stop Appium Client.
+     */
     public void stop() {
         if (driver != null) {
             driver.quit();
