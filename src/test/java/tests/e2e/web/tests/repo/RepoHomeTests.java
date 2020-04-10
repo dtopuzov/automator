@@ -1,10 +1,10 @@
 package tests.e2e.web.tests.repo;
 
-import tests.e2e.web.pages.repo.RepoHomePage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openset.automator.test.web.WebTest;
+import tests.e2e.web.pages.repo.RepoHomePage;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,9 +26,7 @@ public class RepoHomeTests extends WebTest {
                 () -> assertTrue(repoHomePage.isTagVisible("junit5")),
                 () -> assertTrue(repoHomePage.isTagVisible("selenium")),
                 () -> assertTrue(repoHomePage.isTagVisible("webdrivermanager")),
-                () -> assertTrue(repoHomePage.isTagVisible("appium")),
-                () -> assertTrue(repoHomePage.isTagVisible("saucelabs")),
-                () -> assertTrue(repoHomePage.isTagVisible("sikuli"))
+                () -> assertTrue(repoHomePage.isTagVisible("appium"))
         );
     }
 
@@ -36,7 +34,6 @@ public class RepoHomeTests extends WebTest {
     void readmeIsDisplayed() {
         assertAll("Data from README.md is rendered",
                 () -> assertTrue(repoHomePage.isTextVisibleInReadmeForm("The Automator")),
-                () -> assertTrue(repoHomePage.isTextVisibleInReadmeForm("Java based automation framework")),
                 () -> assertTrue(repoHomePage.isTextVisibleInReadmeForm("Technology Stack"))
         );
     }

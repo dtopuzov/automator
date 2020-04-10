@@ -12,11 +12,11 @@ public class RepoHomePage extends WebPage {
     }
 
     public boolean isTagVisible(String text) {
-        By locator = By.xpath("//*[contains(@class, 'topic-tag-link') and contains(text(), '" + text + "')]");
+        By locator = By.xpath("//*[@title='Topic: " + text + "']");
         return isElementVisible(locator);
     }
 
     public boolean isTextVisibleInReadmeForm(String text) {
-        return isElementVisible(By.xpath("//div[@id='readme']//*[contains(text(),'" + text + "')]"));
+        return isElementVisible(By.id("user-content-" + text.toLowerCase().replace(" ", "-")));
     }
 }
