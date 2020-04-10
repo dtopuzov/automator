@@ -2,9 +2,7 @@
 
 ## Java
 
-Minimum required java version to build the Automator project is `Java 9`.
-
-Tests based on `Automator` require `Java 1.8` or above.
+[JDK 11](https://adoptopenjdk.net/?variant=openjdk11&jvmVariant=hotspot) or newer.
 
 ## Mobile Testing
 
