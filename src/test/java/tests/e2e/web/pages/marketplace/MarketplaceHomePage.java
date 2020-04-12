@@ -26,19 +26,23 @@ public class MarketplaceHomePage extends WebPage {
 
     @Step("Navigate to marketplace page")
     public MarketplaceHomePage navigateTo() {
-        webContext.browser.navigateTo(webContext.settings.web.baseUrl + "marketplace");
+        String url = webContext.settings.web.baseUrl + "marketplace";
+        webContext.browser.navigateTo(url);
+        waitForUrl(url);
         return this;
     }
 
     @Step("Click explore free apps")
     public MarketplaceSearchPage exploreFreeApps() {
         getDriver().findElement(By.partialLinkText("Explore free apps")).click();
+        waitForUrl("/category/free");
         return new MarketplaceSearchPage(webContext);
     }
 
     @Step("Click explore Actions")
     public MarketplaceSearchPage exploreActions() {
         getDriver().findElement(By.partialLinkText("Explore Actions")).click();
+        waitForUrl("?type=actions");
         return new MarketplaceSearchPage(webContext);
     }
 }

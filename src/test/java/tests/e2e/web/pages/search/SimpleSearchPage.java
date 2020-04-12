@@ -1,6 +1,5 @@
 package tests.e2e.web.pages.search;
 
-import tests.e2e.web.components.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -9,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openset.automator.test.web.WebContext;
 import org.openset.automator.test.web.WebPage;
+import tests.e2e.web.components.Header;
 
 @SuppressWarnings("unused")
 public class SimpleSearchPage extends WebPage {
@@ -19,9 +19,6 @@ public class SimpleSearchPage extends WebPage {
 
     @FindBy(name = "q")
     private WebElement searchBox;
-
-    @FindBy(css = "#js-pjax-container details > summary")
-    private WebElement prefixesLink;
 
     private By cheatSheetDialogLocator = By.tagName("details-dialog");
     private By closeDialogButtonLocator = By.xpath("//details-dialog//*[@aria-label='Close dialog']");
@@ -46,7 +43,10 @@ public class SimpleSearchPage extends WebPage {
 
     @Step("Click prefixes link")
     public void clickPrefixesLink() {
-        prefixesLink.click();
+        By locator = By.cssSelector("#js-pjax-container details > summary");
+        getWait()
+                .until(ExpectedConditions.elementToBeClickable(locator))
+                .click();
     }
 
     @Step("Search cheat sheet form is displayed")

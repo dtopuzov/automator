@@ -1,6 +1,5 @@
 package tests.e2e.web.pages.search;
 
-import tests.e2e.web.components.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -9,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openset.automator.test.web.WebContext;
 import org.openset.automator.test.web.WebPage;
+import tests.e2e.web.components.Header;
 
 @SuppressWarnings("unused")
 public class AdvancedSearchPage extends WebPage {
@@ -33,7 +33,9 @@ public class AdvancedSearchPage extends WebPage {
 
     @Step("Navigate to /search/advanced page")
     public AdvancedSearchPage navigateTo() {
-        webContext.browser.navigateTo(webContext.settings.web.baseUrl + "search/advanced");
+        String url = webContext.settings.web.baseUrl + "search/advanced";
+        webContext.browser.navigateTo(url);
+        waitForUrl(url);
         return this;
     }
 

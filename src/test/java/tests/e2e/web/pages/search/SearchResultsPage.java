@@ -1,26 +1,35 @@
 package tests.e2e.web.pages.search;
 
-import tests.e2e.web.components.Header;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openset.automator.test.web.WebContext;
 import org.openset.automator.test.web.WebPage;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.given;
 
 public class SearchResultsPage extends WebPage {
-
-    @FindBy(css = "header")
-    public Header header;
-
-    @FindBy(xpath = "//ul[@class='repo-list']/li")
-    private List<WebElement> searchResults;
 
     public SearchResultsPage(WebContext webContext) {
         super(webContext);
     }
 
+    /**
+     * Get search results.
+     *
+     * @return List of WebElements.
+     */
     public List<WebElement> getResults() {
-        return searchResults;
+        By locator = By.xpath("//ul[@class='repo-list']//li");
+
+        given()
+                .ignoreExceptions()
+                .await()
+                .atMost(10, TimeUnit.SECONDS)
+                .until(() -> getDriver().findElements(locator).size() > 0);
+
+        return getDriver().findElements(locator);
     }
 }

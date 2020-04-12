@@ -5,13 +5,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openset.automator.test.web.WebContext;
 import org.openset.automator.test.web.WebPage;
 import tests.e2e.web.components.Header;
 
 import java.util.List;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class MarketplaceSearchPage extends WebPage {
 
     @FindBy(css = "header")
@@ -25,13 +26,22 @@ public class MarketplaceSearchPage extends WebPage {
         super(webContext);
     }
 
+    /**
+     * Open search page for url.
+     *
+     * @param webContext instance of WebContext.
+     * @param url        search url.
+     */
     public MarketplaceSearchPage(WebContext webContext, String url) {
         super(webContext);
-        webContext.browser.navigateTo(webContext.settings.web.baseUrl + url);
+        String searchUrl = webContext.settings.web.baseUrl + url;
+        webContext.browser.navigateTo(searchUrl);
+        waitForUrl(searchUrl);
     }
 
     @Step("Search for {0}")
     public MarketplaceSearchPage searchFor(String text) {
+        getWait().until(ExpectedConditions.elementToBeClickable(searchInput));
         searchInput.clear();
         searchInput.sendKeys(text);
         searchInput.sendKeys(Keys.ENTER);

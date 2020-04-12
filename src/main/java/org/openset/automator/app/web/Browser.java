@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class Browser implements App {
     private static final Log LOGGER = LogFactory.getLogger(Browser.class.getName());
     private WebSettings settings;

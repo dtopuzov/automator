@@ -1,6 +1,7 @@
 package tests.e2e.web.tests.home;
 
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.remote.BrowserType;
 import org.openset.automator.test.web.WebTest;
 import tests.e2e.web.components.Footer;
 import tests.e2e.web.components.SignUpForm;
@@ -110,15 +111,20 @@ class FooterTests extends WebTest {
         @Test
         @DisplayName("Footer links are correct")
         void footerLinksAreCorrect() {
-            assertAll("Verify footer links",
-                    () -> assertEquals("https://help.github.com/terms", footer.getLinkByText("Terms")),
-                    () -> assertEquals("https://help.github.com/privacy", footer.getLinkByText("Privacy")),
-                    () -> assertEquals("https://twitter.com/github", footer.getLinkByTitle("GitHub on Twitter")),
-                    () -> assertEquals("https://www.facebook.com/GitHub", footer.getLinkByTitle("GitHub on Facebook")),
-                    () -> assertEquals("https://www.youtube.com/github", footer.getLinkByTitle("GitHub on YouTube")),
-                    () -> assertEquals("https://www.linkedin.com/company/github", footer.getLinkByTitle("GitHub on Linkedin")),
-                    () -> assertEquals("https://github.com/github", footer.getLinkByTitle("organization"))
-            );
+            if (context.settings.web.browserType.equals(BrowserType.SAFARI)) {
+                // TODO: Need to scroll down.
+                // Safari do not find elements outside viewport.
+            } else {
+                assertAll("Verify footer links",
+                        () -> assertEquals("https://help.github.com/terms", footer.getLinkByText("Terms")),
+                        () -> assertEquals("https://help.github.com/privacy", footer.getLinkByText("Privacy")),
+                        () -> assertEquals("https://twitter.com/github", footer.getLinkByTitle("GitHub on Twitter")),
+                        () -> assertEquals("https://www.facebook.com/GitHub", footer.getLinkByTitle("GitHub on Facebook")),
+                        () -> assertEquals("https://www.youtube.com/github", footer.getLinkByTitle("GitHub on YouTube")),
+                        () -> assertEquals("https://www.linkedin.com/company/github", footer.getLinkByTitle("GitHub on Linkedin")),
+                        () -> assertEquals("https://github.com/github", footer.getLinkByTitle("organization"))
+                );
+            }
         }
     }
 }

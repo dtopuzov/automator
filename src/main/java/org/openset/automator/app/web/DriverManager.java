@@ -11,6 +11,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.openset.automator.app.StartApplicationException;
 import org.openset.automator.settings.SettingsLoadException;
 import org.openset.automator.settings.base.EnvironmentType;
@@ -38,6 +40,8 @@ public class DriverManager {
                     break;
                 case BrowserType.EDGE:
                     WebDriverManager.edgedriver().setup();
+                    break;
+                case BrowserType.SAFARI:
                     break;
                 default:
                     String message = String.format("Unsupported browser type: %s", settings.web.browserType);
@@ -76,6 +80,8 @@ public class DriverManager {
                 return new FirefoxDriver((FirefoxOptions) capabilities);
             case BrowserType.EDGE:
                 return new EdgeDriver((EdgeOptions) capabilities);
+            case BrowserType.SAFARI:
+                return new SafariDriver((SafariOptions) capabilities);
             default:
                 String message = String.format("Unsupported local browser type: %s", settings.web.browserType);
                 throw new StartApplicationException(message);

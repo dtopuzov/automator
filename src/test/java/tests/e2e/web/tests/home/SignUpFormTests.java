@@ -23,7 +23,7 @@ public class SignUpFormTests extends WebTest {
     }
 
     @Test
-    @Disabled("Not implemented because we don't want to polute GitHub with fake users")
+    @Disabled("Not implemented because we don't want to pollute GitHub with fake users")
     @DisplayName("Sign up with valid account")
     void signUpWithValidAccount() {
     }

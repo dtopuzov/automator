@@ -6,6 +6,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.safari.SafariOptions;
 import org.openset.automator.app.StartApplicationException;
 import org.openset.automator.settings.web.WebConfig;
 
@@ -33,8 +34,12 @@ public class LocalCapabilities {
                 capabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.FIREFOX);
                 break;
             case BrowserType.EDGE:
-                capabilities = getEdgeOptions(webConfig);
+                capabilities = getEdgeOptions();
                 capabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.EDGE);
+                break;
+            case BrowserType.SAFARI:
+                capabilities = getSafariOptions();
+                capabilities.setCapability(CapabilityType.BROWSER_NAME, BrowserType.SAFARI);
                 break;
             default:
                 String message = String.format("Unsupported browser type: %s", webConfig.browserType);
@@ -84,7 +89,11 @@ public class LocalCapabilities {
         return options;
     }
 
-    public static EdgeOptions getEdgeOptions(WebConfig webConfig) {
+    public static EdgeOptions getEdgeOptions() {
         return new EdgeOptions();
+    }
+
+    public static SafariOptions getSafariOptions() {
+        return new SafariOptions();
     }
 }

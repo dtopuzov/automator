@@ -56,12 +56,16 @@ public class Header extends Widget {
 
     @Step("Click Sign In")
     public void signIn() {
-        getWrappedDriver().findElement(By.partialLinkText("Sign in")).click();
+        getWrappedDriver()
+                .findElement(By.partialLinkText("Sign in"))
+                .click();
     }
 
     @Step("Click Sign Up")
     public void signUp() {
-        getWrappedDriver().findElement(By.partialLinkText("Sign up")).click();
+        getWrappedDriver()
+                .findElement(By.partialLinkText("Sign up"))
+                .click();
     }
 
     @Step("Expand Why GitHub? menu")

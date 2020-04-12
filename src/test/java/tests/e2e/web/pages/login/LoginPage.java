@@ -1,6 +1,5 @@
 package tests.e2e.web.pages.login;
 
-import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -8,6 +7,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openset.automator.test.web.WebContext;
 import org.openset.automator.test.web.WebPage;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
 
 @SuppressWarnings("unused")
 public class LoginPage extends WebPage {
@@ -43,11 +46,13 @@ public class LoginPage extends WebPage {
         signInButton.click();
     }
 
-    @Attachment
     @Step("Get value of error message")
     public String getValueOfErrorMessage() {
         By locator = By.id("js-flash-container");
         getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
-        return getDriver().findElement(locator).getText();
+        await()
+                .atMost(10, TimeUnit.SECONDS)
+                .until(() -> getDriver().findElement(locator).getText().trim().length() > 3);
+        return getDriver().findElement(locator).getText().trim();
     }
 }

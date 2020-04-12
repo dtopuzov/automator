@@ -25,7 +25,7 @@ public class CareersPage extends WebPage {
 
     @Step("Expand {0} positions")
     public CareersPage expandPositions(String area) {
-        By locator = By.xpath("//div[contains(@class, 'js-details-container')]//button//*[text() = '" + area + "']");
+        By locator = By.xpath("//button[@aria-label='Expand and collapse']/h3[text() = '" + area + "']");
         getDriver().findElement(locator).click();
         return this;
     }
