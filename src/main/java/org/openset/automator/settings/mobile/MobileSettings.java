@@ -1,6 +1,7 @@
 package org.openset.automator.settings.mobile;
 
 import org.openset.automator.settings.base.BaseSettings;
+import org.openset.automator.settings.base.EnvironmentType;
 import org.openset.automator.settings.cloud.SauceConfig;
 
 /**
@@ -17,6 +18,8 @@ public class MobileSettings {
     public MobileSettings() {
         base = new BaseSettings();
         mobile = new MobileConfig(base);
-        sauce = new SauceConfig(base);
+        if (base.environmentType == EnvironmentType.SAUCELABS) {
+            sauce = new SauceConfig(base);
+        }
     }
 }

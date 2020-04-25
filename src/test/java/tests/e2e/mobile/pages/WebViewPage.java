@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class WebViewPage extends MobilePage {
 
     public enum MenuItem {
-        GUIDE {
+        DOCS {
             public String toString() {
-                return "Guide";
+                return "Docs";
             }
         },
         API {

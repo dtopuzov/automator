@@ -22,7 +22,7 @@ public class WebViewTests extends MobileTest {
     @Test
     @DisplayName("Smoke tests for WebView page")
     void smokeWebViewTest() {
-        webViewPage.openTab(WebViewPage.MenuItem.GUIDE);
+        webViewPage.openTab(WebViewPage.MenuItem.DOCS);
         webViewPage.verityTextVisible("Introduction");
 
         webViewPage.openTab(WebViewPage.MenuItem.API);
