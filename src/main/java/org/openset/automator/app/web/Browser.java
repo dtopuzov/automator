@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class Browser implements App {
     private static final Log LOGGER = LogFactory.getLogger(Browser.class.getName());
-    private WebSettings settings;
-    private DriverManager driverManager;
+    private final WebSettings settings;
+    private final DriverManager driverManager;
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -150,12 +150,16 @@ public class Browser implements App {
      */
     @Step("Maximize browser")
     public Browser maximize() {
-        driver.manage().window().maximize();
-        LOGGER.info("Maximize current browser");
-        Dimension currentSize = driver.manage().window().getSize();
-        String x = String.valueOf(currentSize.getHeight());
-        String y = String.valueOf(currentSize.getHeight());
-        LOGGER.info(String.format("Current resolution: %sx%s", x, y));
+        if (isMobile()) {
+            LOGGER.info("Can not maximize mobile browsers.");
+        } else {
+            driver.manage().window().maximize();
+            LOGGER.info("Maximize current browser");
+            Dimension currentSize = driver.manage().window().getSize();
+            String x = String.valueOf(currentSize.getHeight());
+            String y = String.valueOf(currentSize.getHeight());
+            LOGGER.info(String.format("Current resolution: %sx%s", x, y));
+        }
         return this;
     }
 
@@ -200,6 +204,21 @@ public class Browser implements App {
         stop();
         org.openset.automator.os.Process.stop(getProcessName());
         LOGGER.info(String.format("All %s processes stopped.", settings.web.browserType));
+    }
+
+    /**
+     * Check if browser is on mobile device.
+     *
+     * @return true if browser is on mobile device.
+     */
+    public boolean isMobile() {
+        if (settings.browserStack != null) {
+            return settings.browserStack.getBrowserStackProperties().get("browserstack.os") == null;
+        } else {
+            // Currently local testing is not designed for mobile.
+            // TODO: Enable local mobile web testing on deal devices or emulators.
+            return false;
+        }
     }
 
     /**

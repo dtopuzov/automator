@@ -20,7 +20,7 @@ import org.openset.automator.settings.web.WebSettings;
 
 public class DriverManager {
 
-    private WebSettings settings;
+    private final WebSettings settings;
 
     public DriverManager(WebSettings settings) {
         this.settings = settings;
