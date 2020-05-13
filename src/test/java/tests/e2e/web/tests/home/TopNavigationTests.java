@@ -1,11 +1,11 @@
 package tests.e2e.web.tests.home;
 
-import tests.e2e.web.components.Header;
-import tests.e2e.web.pages.HomePage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openset.automator.test.web.WebTest;
+import tests.e2e.web.components.Header;
+import tests.e2e.web.pages.HomePage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -97,8 +97,8 @@ class TopNavigationTests extends WebTest {
     @DisplayName("SignUp leads to sign up page")
     void signUpLeadsToSignUpPage() {
         header.signUp();
-        String expectedUrl = context.settings.web.baseUrl + "join?source=header-home";
+        String expectedBaseUrl = context.settings.web.baseUrl + "join?";
         String actualUrl = context.browser.getUrl();
-        assertEquals(expectedUrl, actualUrl, "Sign Up do not lead do Sign Up page");
+        assertTrue(actualUrl.startsWith(expectedBaseUrl), "Sign Up do not lead do Sign Up page");
     }
 }
