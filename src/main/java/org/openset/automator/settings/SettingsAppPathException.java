@@ -1,4 +1,4 @@
-package org.openset.automator.settings.electron;
+package org.openset.automator.settings;
 
 import java.io.IOException;
 

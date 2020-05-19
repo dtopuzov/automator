@@ -1,8 +1,8 @@
 package org.openset.automator.settings.base;
 
 import org.openset.automator.os.File;
+import org.openset.automator.settings.SettingsAppPathException;
 import org.openset.automator.settings.SettingsLoadException;
-import org.openset.automator.settings.electron.SettingsAppPathException;
 
 import java.io.IOException;
 import java.io.InputStream;

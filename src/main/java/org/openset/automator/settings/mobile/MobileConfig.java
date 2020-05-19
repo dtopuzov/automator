@@ -4,7 +4,7 @@ import org.openqa.selenium.Platform;
 import org.openset.automator.log.Log;
 import org.openset.automator.log.LogFactory;
 import org.openset.automator.settings.base.BaseSettings;
-import org.openset.automator.settings.electron.SettingsAppPathException;
+import org.openset.automator.settings.SettingsAppPathException;
 
 import java.io.IOException;
 import java.io.InputStream;
