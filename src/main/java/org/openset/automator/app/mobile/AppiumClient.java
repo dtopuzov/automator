@@ -133,8 +133,8 @@ public class AppiumClient {
         // Set WebView options
         String chromeDriverVersion = settings.mobile.chromeDriverVersion;
         if (chromeDriverVersion != null) {
-            WebDriverManager.chromedriver().version(chromeDriverVersion).setup();
-            String path = WebDriverManager.chromedriver().version(chromeDriverVersion).getBinaryPath();
+            WebDriverManager.chromedriver().driverVersion(chromeDriverVersion).setup();
+            String path = WebDriverManager.chromedriver().driverVersion(chromeDriverVersion).getBinaryPath();
             capabilities.setCapability(AndroidMobileCapabilityType.CHROMEDRIVER_EXECUTABLE, path);
         }
 

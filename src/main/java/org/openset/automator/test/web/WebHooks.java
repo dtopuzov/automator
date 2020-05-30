@@ -28,8 +28,7 @@ public class WebHooks implements BeforeAllCallback, ExtensionContext.Store.Close
                 systemReady.set(true);
                 WebContext webContext = WebContextFactory.getInstance().getWebContext();
                 webContext.browser.start();
-                if (webContext.settings.web.browserSize == null)
-                {
+                if (webContext.settings.web.browserSize == null) {
                     webContext.browser.maximize();
                 }
 
