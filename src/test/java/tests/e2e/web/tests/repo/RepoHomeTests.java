@@ -3,6 +3,8 @@ package tests.e2e.web.tests.repo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.openset.automator.test.web.WebTest;
 import tests.e2e.web.pages.repo.RepoHomePage;
 
@@ -20,6 +22,7 @@ public class RepoHomeTests extends WebTest {
     }
 
     @Test
+    @DisabledOnOs(OS.OTHER)
     void repoLabelsAreCorrect() {
         assertAll("Repo labels are displayed",
                 () -> assertTrue(repoHomePage.isTagVisible("java")),
