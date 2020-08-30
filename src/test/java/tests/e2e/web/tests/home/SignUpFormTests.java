@@ -51,12 +51,12 @@ public class SignUpFormTests extends WebTest {
     @Test
     @DisplayName("Link to Terms of Service exists")
     void linkToTermsOfServiceExists() {
-        assertEquals("https://help.github.com/terms", signUpForm.getLinkByText("Terms of Service"));
+        assertEquals("https://docs.github.com/terms", signUpForm.getLinkByText("Terms of Service"));
     }
 
     @Test
     @DisplayName("Link to Privacy Statement exists")
     void linkToPrivacyStatementExists() {
-        assertEquals("https://help.github.com/privacy", signUpForm.getLinkByText("Privacy Statement"));
+        assertEquals("https://docs.github.com/privacy", signUpForm.getLinkByText("Privacy Statement"));
     }
 }

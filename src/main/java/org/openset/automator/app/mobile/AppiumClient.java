@@ -134,7 +134,7 @@ public class AppiumClient {
         String chromeDriverVersion = settings.mobile.chromeDriverVersion;
         if (chromeDriverVersion != null) {
             WebDriverManager.chromedriver().driverVersion(chromeDriverVersion).setup();
-            String path = WebDriverManager.chromedriver().driverVersion(chromeDriverVersion).getBinaryPath();
+            String path = WebDriverManager.chromedriver().driverVersion(chromeDriverVersion).getDownloadedDriverPath();
             capabilities.setCapability(AndroidMobileCapabilityType.CHROMEDRIVER_EXECUTABLE, path);
         }
 

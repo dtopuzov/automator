@@ -34,7 +34,7 @@ repositories {
 dependencies {
     implementation group: 'com.sikulix', name: 'sikulixapi', version: '2.0.4'
     implementation group: 'io.appium', name: 'java-client', version: '7.3.0'
-    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '4.0.0'
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '4.2.0'
     implementation group: 'io.qameta.allure', name: 'allure-junit5', version: '2.13.3'
     implementation group: 'org.awaitility', name: 'awaitility', version: '4.0.3'
     implementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.2'

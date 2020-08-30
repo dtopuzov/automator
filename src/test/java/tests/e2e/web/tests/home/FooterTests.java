@@ -47,13 +47,13 @@ class FooterTests extends WebTest {
         @Test
         @DisplayName("Link to terms of service exists in footer signup form")
         void linkToTermsOfServiceExistsInFooterSignUpForm() {
-            assertEquals("https://help.github.com/terms", signUpForm.getLinkByText("terms of service"));
+            assertEquals("https://docs.github.com/terms", signUpForm.getLinkByText("terms of service"));
         }
 
         @Test
         @DisplayName("Link to privacy statment exists in footer signup form")
         void linkToPrivacyStatementExistsInFooterSignUpForm() {
-            assertEquals("https://help.github.com/privacy", signUpForm.getLinkByText("privacy statement"));
+            assertEquals("https://docs.github.com/privacy", signUpForm.getLinkByText("privacy statement"));
         }
     }
 
@@ -75,7 +75,7 @@ class FooterTests extends WebTest {
         @DisplayName("Platform links are correct")
         void platformLinksAreCorrect() {
             assertAll("Verify platform links",
-                    () -> assertEquals("https://developer.github.com/", footer.getLinkByText("Developer API")),
+                    () -> assertEquals("https://docs.github.com/", footer.getLinkByText("Developer API")),
                     () -> assertEquals("http://partner.github.com/", footer.getLinkByText("Partners")),
                     () -> assertEquals("https://atom.io/", footer.getLinkByText("Atom")),
                     () -> assertEquals("http://electronjs.org/", footer.getLinkByText("Electron")),
@@ -87,7 +87,7 @@ class FooterTests extends WebTest {
         @DisplayName("Support links are correct")
         void supportLinksAreCorrect() {
             assertAll("Verify support links",
-                    () -> assertEquals("https://help.github.com/", footer.getLinkByText("Help")),
+                    () -> assertEquals("https://docs.github.com/", footer.getLinkByText("Help")),
                     () -> assertEquals("https://github.community/", footer.getLinkByText("Community Forum")),
                     () -> assertEquals("https://services.github.com/", footer.getLinkByText("Professional Services")),
                     () -> assertEquals("https://lab.github.com/", footer.getLinkByText("Learning Lab")),
@@ -116,8 +116,8 @@ class FooterTests extends WebTest {
                 // Safari do not find elements outside viewport.
             } else {
                 assertAll("Verify footer links",
-                        () -> assertEquals("https://help.github.com/terms", footer.getLinkByText("Terms")),
-                        () -> assertEquals("https://help.github.com/privacy", footer.getLinkByText("Privacy")),
+                        () -> assertEquals("https://docs.github.com/terms", footer.getLinkByText("Terms")),
+                        () -> assertEquals("https://docs.github.com/privacy", footer.getLinkByText("Privacy")),
                         () -> assertEquals("https://twitter.com/github", footer.getLinkByTitle("GitHub on Twitter")),
                         () -> assertEquals("https://www.facebook.com/GitHub", footer.getLinkByTitle("GitHub on Facebook")),
                         () -> assertEquals("https://www.youtube.com/github", footer.getLinkByTitle("GitHub on YouTube")),
