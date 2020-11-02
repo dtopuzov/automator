@@ -4,7 +4,6 @@
 [![BrowserStack CI](https://github.com/dtopuzov/automator/workflows/BrowserStack%20CI/badge.svg)](https://github.com/dtopuzov/automator/actions?query=workflow%3A%22BrowserStack+CI%22)
 ![](https://img.shields.io/badge/license-%20Apache--2.0-brightgreen.svg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat )](https://github.com/dtopuzov/automator/pulls)
-[![GitHub stars](https://img.shields.io/github/stars/dtopuzov/automator.svg?style=flat&color=brightgreen)](https://github.com/dtopuzov/automator/stargazers)
 
 Java based automation framework for web, mobile, desktop and APIs.
 
